@@ -308,7 +308,7 @@ SWIFT_CLASS("_TtC14clovergoclient8Merchant")
 @interface Merchant : NSObject
 @property (nonatomic, copy) NSString * _Null_unspecified id;
 @property (nonatomic, copy) NSString * _Nullable name;
-@property (nonatomic, copy) NSDictionary<NSString *, NSNumber *> * _Nullable properties;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable features;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
