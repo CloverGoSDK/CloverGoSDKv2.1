@@ -353,6 +353,7 @@ SWIFT_CLASS("_TtC14clovergoclient10ReaderInfo")
 @property (nonatomic, copy) NSString * _Nullable serialNumber;
 @property (nonatomic) BOOL connected;
 @property (nonatomic, readonly) enum CardReaderType readerType;
+@property (nonatomic, copy) NSString * _Nullable bluetoothId;
 @property (nonatomic, copy) NSString * _Nullable bluetoothName;
 @property (nonatomic, copy) NSString * _Nullable readerName;
 - (nonnull instancetype)initWithReaderType:(enum CardReaderType)readerType serialNumber:(NSString * _Nullable)serialNumber OBJC_DESIGNATED_INITIALIZER;
