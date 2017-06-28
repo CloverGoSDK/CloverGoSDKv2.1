@@ -178,6 +178,7 @@ typedef SWIFT_ENUM(NSInteger, CardReaderEvent) {
   CardReaderEventpairing_complete = 14,
   CardReaderEventcontactless_failed_try_again = 15,
   CardReaderEventswipe_dip_tap_card = 16,
+  CardReaderEventremove_card = 17,
 };
 
 typedef SWIFT_ENUM(NSInteger, CardType) {
