@@ -1,1 +1,1 @@
-# CloverGoSDKv2.1
+# CloverGoSDKv3.0
