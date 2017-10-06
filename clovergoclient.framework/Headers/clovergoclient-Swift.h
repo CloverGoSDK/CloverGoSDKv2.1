@@ -540,6 +540,7 @@ typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
   TransactionEventDuplicate_transaction = 1,
   TransactionEventOffline = 2,
   TransactionEventOffline_payment_limit_exceeded = 3,
+  TransactionEventPartial_auth = 4,
 };
 
 
