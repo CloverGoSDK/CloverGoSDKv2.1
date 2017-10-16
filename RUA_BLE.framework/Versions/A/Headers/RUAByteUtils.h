@@ -54,6 +54,13 @@ static char base64EncodingTable[64] = {
 + (NSString *)convertHexStringtoASCIIString:(NSString *)hexString;
 
 /**
+ Converts ASCII string to Hex String
+ @param ASCII string
+ @return Hexadecimal String
+ */
++ (NSString *) convertASCIIStringToHexString:(NSString *)str;
+
+/**
  Converts Data to Base 64 encoded string
  @param data
  @param length

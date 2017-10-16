@@ -12,6 +12,7 @@
 #import "RUAConfigurationManager.h"
 #import "RUADeviceManager.h"
 #import "RUADeviceStatusHandler.h"
+#import "RUAReleaseHandler.h"
 #import "RUADeviceSearchListener.h"
 #import "RUAAudioJackPairingListener.h"
 
@@ -19,14 +20,13 @@
 #define RUADeviceManager_h
 
 typedef  enum {
-    RUADeviceTypeG2x,
 	RUADeviceTypeG4x,
-    RUADeviceTypeRP100x,
-    RUADeviceTypeRP170c,
 	RUADeviceTypeRP350x,
+    RUADeviceTypeMOBY3000,
     RUADeviceTypeRP450c,
 	RUADeviceTypeRP750x,
-	RUADeviceTypeiCMP,
+    RUADeviceTypeRP45BT,
+    RUADeviceTypeMOBY8500,
 	RUADeviceTypeUnknown
 }RUADeviceType;
 
@@ -60,7 +60,7 @@ typedef  enum {
 - (RUADeviceType)getType;
 
 /**
- Initializes the roam reader (through audio jack) and registers the status handler for device status updates.
+ Initializes the roam reader (through audio jack or bluetooth) and registers the status handler for device status updates.
  <p>
  Usage:
  <code>
@@ -77,6 +77,24 @@ typedef  enum {
 - (BOOL)initializeDevice:(id <RUADeviceStatusHandler> )statusHandler;
 
 /**
+ Initializes the roam reader (through audio jack or bluetooth) with defined timeout and registers the status handler for device status updates.
+ <p>
+ Usage:
+ <code>
+ <br>
+ id<Reader> mRP750xReader;
+ id<RUADeviceStatusHandler> mRUADeviceStatusHandler;
+ [mRP750xReader initialize:mRUADeviceStatusHandler andTimeout:30*1000];
+ </code>
+ </p>
+ @param statusHandler the roam reader  status handler
+ @param timeout defined timeout in millisecond(Default 30 seconds)
+ @see RUADeviceStatusHandler
+ @return true if successful
+ */
+- (BOOL)initializeDevice:(id <RUADeviceStatusHandler> )statusHandler andTimeout:(int)timeout;
+
+/**
  Checks if the payment device is ready.
  *
  @return true if payment device is active
@@ -89,6 +107,22 @@ typedef  enum {
  @return true if successful
  */
 - (BOOL)releaseDevice;
+
+
+/**
+ Releases the roam reader and triggers status handler (passed to the initialize method) onDisconnected call back method if successful.
+ @param releaseHandler release handler
+ */
+- (void)releaseDevice:(id <RUAReleaseHandler>)releaseHandler;
+
+/**
+ Discovers the available devices for duration
+ *
+ @param searchListener the callback handler
+ @duration duration of the bluetooth discovery in milliseconds
+ @see RUADeviceSearchListener
+ */
+- (void)searchDevicesForDuration:(long)duration andListener:(id <RUADeviceSearchListener> )searchListener;
 
 /**
  Discovers the available devices
@@ -112,6 +146,10 @@ typedef  enum {
  */
 - (void)searchDevicesWithLowRSSI:(NSInteger)lowRSSI andHighRSSI:(NSInteger)highRSSI andListener:(id<RUADeviceSearchListener>)searchListener;
 
+/**
+ Stops the ongoing discovery process
+ */
+- (void)cancelSearch;
 
 /**
  This is an Asynchronous method that returns the battery level of a device. <br>
@@ -122,6 +160,16 @@ typedef  enum {
  */
 - (void)getBatteryStatus:(OnResponse)response;
 
+/**
+ This is an Asynchronous method that returns the battery level and charging status of a device. <br>
+ <br>
+ When the reader processes the command, it returns the result as a map to  the OnResponse block passed.<br>
+ The map passed to the onResponse callback contains the following parameters as keys, 
+ RUAParameterBatteryLevel,
+ RUAParameterIsDeviceCharging<br>
+ @param response OnResponse block
+ */
+- (void)getBatteryLevelWithChargingStatus:(OnResponse)response;
 
 /**
  Asynchronous method that sets the card reader in firmware update mode
@@ -185,8 +233,16 @@ Triggers the firmware update with the file path provided and returns the respons
  * <br>
  * Currently only supported by the RP450c device manager.
  */
-- (void) confirmPairing:(BOOL)isMatching;
+- (void) confirmPairing:(BOOL)isMatching __deprecated;
 
+/**
+ * Returns the active communication type for those devices that can have multiple interfaces
+ * connected at a point of time. E.g RP450c that is plugged in via audio jack and can have active
+ * bluetooth connection.
+ * @return {@see RUACommunicationInterface}
+ */
+
+-(RUACommunicationInterface) getActiveCommunicationType;
 
 @end
 

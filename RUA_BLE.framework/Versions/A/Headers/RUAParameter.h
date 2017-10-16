@@ -562,13 +562,14 @@ typedef NS_ENUM(NSInteger, RUAParameter) {
     
     /**
      9F33 : Terminal Capabilities
-     E0B8C8 Offline PIN and Signature, attended.
-     E028C8 Signature Only, attended.
-     6098C8 Offline PIN only, unattended.
-     E068C8 Online PIN, Signature, attended.
-     E0F8C8 Offline PIN, Online PIN and Signature, attended.
-     60D8C8 Offline PIN and Online PIN, unattended.
-     E040C8 Online PIN only, attended.
+      E0F8C8 - Offline PIN, Online PIN, Signature,No CVM, attended.(RP750x)<br>
+      E0F0C8 - Offline PIN Online PIN and Signature, attended.(RP750x)<br>
+      E0B0C8 - Offline PIN, Signature attended. (RP750x)<br>
+      E068C8 - Online PIN, Signature, attended. (RP750x)<br>
+      E040C8 - Online PIN only, attended. (RP750x)<br>
+      E028C8 - Signature Only, attended. (RP350x)<br>
+      6098C8 - Offline PIN only, unattended.<br>
+      60D8C8 - Offline PIN and Online PIN, unattended.<br>
      */
 	RUAParameterTerminalCapabilities = 387,
     
@@ -1325,6 +1326,78 @@ typedef NS_ENUM(NSInteger, RUAParameter) {
      DF57 : Discover Dpas Pseudo Track 2 Data, up to 50 bytes
      * */
     RUAParameterDiscoverDPASPseudoTrack2Data =529,
+    
+    /**
+     *  Parameter related to RKI for Read Key Mapping Information
+     */
+    RUAParameterKeyMappingInfo = 530,
+
+    /**
+     *  This indicated the file version for the certificates installed in the card reader. 
+     */
+    RUAParameterReadCertificateFilesVersionInfo=531,
+
+    RUAParameterVirtualTrack5Data = 532,
+
+    /**
+     DF8230 : Force ONLINE PIN
+     0x00 = Default CVM processing
+     0x01 = force online PIN as CVM (used for US contactless MSR Debit)
+     */
+    RUAParameterForceOnlinePIN = 533,
+
+    /**
+     DF8231 : Enable contactless PIN bypass
+     0x00 = Default no PIN bypass for contactless CVMs
+     0x01 = Enable contactless PIN bypass (used for US contactless MSR Debit)
+     * */
+    RUAParameterEnableContactlessPINBypass = 534,
+    
+    /**
+     DF4B : POS Cardholder Interaction Information informs the Kernel about the indicators set in
+     the mobile phone that may influence the action flow of the merchant and cardholder. (Mastercard specific)
+     */
+    RUAParameterPOSCardholderInteractionInformation = 535,
+    
+    /**
+     Returns a boolean value, to indicate if device is charging
+     */
+    RUAParameterIsDeviceCharging = 536,
+
+    /**
+     Returns the redacted card number
+     */
+    RUAParameterRedactedCardNumber= 537,
+
+    //Apple VAS Responses
+    RUAParameterVASVersion = 538,
+    
+    RUAParameterVASMerchantsCount = 539,
+    
+    RUAParameterLastVASErrorMessage = 540,
+    
+    RUAParameterVASExchangedMessageLog = 541,
+    
+    RUAParameterFirmwareVersionString = 542,
+
+    RUAParameterVASData = 543,
+    
+    RUAParameterShouldProceedWithPayment = 544,
+    
+    RUAParameterStartVASResponseCode = 545,
+    
+    RUAParameterFirmwareChecksumInfo = 546,
+    
+    /**
+     DF8232 : Enable US Quick Chip Mode
+     bit 0 - Enable Mastercard
+     bit 1 - Enable Visa
+     Bit 2 - Enable Discover
+     Bit 3 - Enable Amex (RFU)
+     Example:
+     03  - Enable Mastercard & Visa
+     * */
+    RUAParameterEnableUSQuickChipMode = 996,
 
     RUAParameterP2Field = 997,
 

@@ -11,13 +11,13 @@
 #import "RUAReaderVersionInfo.h"
 
 #define RUA_DEBUG 1
-
 #ifdef RUA_DEBUG
 #define RUA_DEBUG_LOG(...) NSLog(__VA_ARGS__)
 #else
 #define RUA_DEBUG_LOG(...)
 #endif
 
+static NSString *RUA_Version = @"1.7.1.384";
 
 @interface RUA : NSObject
 
@@ -27,6 +27,17 @@
  */
 + (void)enableDebugLogMessages:(BOOL)enable;
 
+/**
+ * Sets if the ROAMreaderUnifiedAPI has to operate in production mode.<br>
+ *
+ * By default, the production mode is enabled.
+ *
+ * Note: For now, debug logging cannot be enabled only if ROAMreaderUnified API is operating in production mode
+ *
+ * @param enable boolean to indicate that this is production mode
+ *
+ */
++ (void)setProductionMode:(BOOL)enable;
 
 /**
  Returns true if RUA log messages are enabled
@@ -74,19 +85,7 @@
  Returns an version of ROAMReaderUnifiedAPI (RUA)
  @return RUADeviceManager device manager for the device type specified
  */
-+ (NSString *) versionString;
-
-+ (BOOL)isUpdateRequired:(NSString*)filePath readerInfo:(RUAReaderVersionInfo*)readerVersionInfo;
-
-/**
- * Returns a boolean to indicate if the UNS files need to be loaded onto the terminal.
- *
- * @return boolean to indicate if the UNS files need to be loaded onto the terminal
- * @see RUAReaderVersionInfo, RUAFileVersionInfo
- *
- */
-
-+ (BOOL)isUpdateRequired:(NSArray*)UNSFiles readerVersionInfo:(RUAReaderVersionInfo*)readerVersionInfo;;
++ (NSString *) versionString __deprecated_msg("use RUA_Version instead");
 
 /**
  * Returns a list of file version descriptions for each file
@@ -96,10 +95,5 @@
  */
 
 + (NSArray*)getUnsFileVersionInfo:(NSString*)filePath;
-
-+ (void)getDeviceManagerIfavailable:(id <RUADeviceStatusHandler> )statusHandler deviceList:(NSArray*)list;
-
-
-
 
 @end

@@ -50,7 +50,8 @@ typedef NS_ENUM(NSInteger, RUAProgressMessage) {
     RUAProgressMessagePleaseSeePhone,
 //  C017 is a Fallback progress message informing the mobile app that contactless transaction has failled and the cardholder should insert or swipe his card
     RUAProgressMessageContactlessInterfaceFailedTryContact,
-    RUAProgressMessagePresentCardAgain
+    RUAProgressMessagePresentCardAgain,
+    RUAProgressMessageCardRemoved
 };
 
 

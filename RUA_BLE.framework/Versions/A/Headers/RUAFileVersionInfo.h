@@ -8,9 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #ifdef RUA_MFI
-#import <RPx_MFI/MPOSCommunicationManager/LDTmsFileVersionInfo.h>
+#import <LandiSDK_MFI/LDTmsFileVersionInfo.h>
 #else
-#import <RPx_BLE/MPOSCommunicationManager/LDTmsFileVersionInfo.h>
+#import <LandiSDK_BLE/LDTmsFileVersionInfo.h>
 #endif
 
 @interface RUAFileVersionInfo : NSObject
@@ -37,8 +37,12 @@
 - (id)initWithUNSFile:(LDTmsFileVersionInfo*)ldtFileversionInfo;
 - (id)initWithUNSJson:(NSString*)UNSJson;
 - (id)init:(NSString*)infoFromReadVersion ;
-- (NSString *) toString;
-- (BOOL) namePortionMatches:(RUAFileVersionInfo *)info;
-- (BOOL) isNewerThan:(RUAFileVersionInfo *)info;
+- (NSString *)toString;
+- (BOOL)namePortionMatches:(RUAFileVersionInfo *)info;
+/**
+ * Returns 1 if this object's versioning members are newer,
+ * 0 if the same, -1 if older than the ones of the object passed in..
+ */
+- (int)compareWith:(RUAFileVersionInfo *)info;
 
 @end

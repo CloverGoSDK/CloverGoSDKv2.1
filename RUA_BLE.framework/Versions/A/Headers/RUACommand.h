@@ -86,7 +86,7 @@ typedef NS_ENUM (NSInteger, RUACommand) {
 	 * This command applies only to EMV readers.<br>
 	 * This commands revokes a Certificate Authority public key, by removing it from the public key data store.
 	 */
-	RUACommandRevokePulicKey = 12,
+	RUACommandRevokePublicKey = 12,
     
 	/**
 	 * This command applies only to EMV readers.<br>
@@ -208,7 +208,132 @@ typedef NS_ENUM (NSInteger, RUACommand) {
 
      */
     RUACommandWaitForCardRemoval =40,
+    
+    /**
+     *  This command is used for RKI
+     */
+    RUACommandReadKeyMappingInformation = 41,
 
+    /**
+     * This command is used to read certificate file versions that is used to check if a RKI Injection is needed
+     */
+    RUACommandReadCertificateFilesVersion=42,
+
+    /**
+     *  This command is used to enable the RKI Mode before the injection process
+     */
+    RUACommandEnableRKIMode = 43,
+    /**
+     *  This command is used to trigger the RKI process
+     */
+    RUACommandTriggerRKI = 44,
+    
+    /**
+    * This command applies only to EMV readers.<br>
+    * This command will add a number of AIDs to the list that the reader maintains, defining which applications are supported.<br>
+    */
+    RUACommandSubmitAIDsWithTLVDataList = 45,
+    
+    /**
+     * This command returns the device's current battery status and battery level
+     */
+    RUACommandBatteryInfoWithChargingStatus = 46,
+    
+    /**
+     * This command is used to set the Firmware Version String
+     */
+    RUACommandSetFirmwareVersionString = 47,
+    
+    /**
+     * This command is used to get the Firmware Version String
+     */
+    RUACommandGetFirmwareVersionString = 48,
+
+    /**
+     * This command is used to configure beeps
+     */
+    RUACommandConfigureBeep = 49,
+    
+    /**
+     *  This command is used to Get the VAS Version
+     */
+    RUACommandGetVASVersion = 50,
+    
+    /**
+     *  This command is used to get the count of VAS merchants
+     */
+    RUACommandGetVASMerchantCount = 51,
+    
+    /**
+     *  This command is used to clear the VAS merchants
+     */
+    RUACommandClearVASMerchants = 52,
+    
+    /**
+     *  This command is used to get VAS error message
+     */
+    RUACommandGetVASErrorMessage = 53,
+    
+    /**
+     *  This command is used to activate VAS exchange message logs
+     */
+    RUACommandActivateVASExchangedMessageLog = 54,
+    
+    /**
+     *  This command is used to deactivate VAS exchange message logs
+     */
+    RUACommandDeactivateVASExchangedMessageLog = 55,
+    
+    /**
+     *  This command is used to get VAS exchange message logs
+     */
+    RUACommandGetVASExchangedMessageLog = 56,
+    
+    /**
+     *  This command is used to enable VAS Mode
+     */
+    RUACommandEnableVASMode = 57,
+    
+    /**
+     *  This command is used to get VAS Data
+     */
+    RUACommandGetVASData = 58,
+    
+    /**
+     *  This command is used to enable VAS PLSE State
+     */
+    RUACommandEnableVASPLSEState = 59,
+    
+    /**
+     *  This command is used to set VAS Unpredictable Number
+     */
+    RUACommandSetVASUnpredictableNumber = 60,
+    
+    /**
+     *  This command is used to set VAS Application Version
+     */
+    RUACommandSetVASApplicationVersion = 61,
+    
+    /**
+     *  This command is used to add VAS Merchant
+     */
+    RUACommandAddVASMerchant = 62,
+    
+    /**
+     *  This command is used to enable VAS Mode for merchant
+     */
+    RUACommandEnableVASModeForMerchant = 63,
+    
+    /**
+     *  This command is used to start VAS
+     */
+    RUACommandStartVAS = 64,
+    
+    /**
+     * This command is used to get the checksum for firmware type
+     */
+    RUACommandGetFirmwareChecksum = 65,
+    
 	RUACommandUnknown = 99
 };
 

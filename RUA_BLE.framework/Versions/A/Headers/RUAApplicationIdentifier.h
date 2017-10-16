@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RUAApplicationIdentifier : NSObject
+@interface RUAApplicationIdentifier : NSObject<NSCopying>
 
 @property NSString *aid;
 
@@ -36,13 +36,20 @@
 /** The Application selection flags. */
 @property NSString *applicationSelectionFlags;
 
+/** Only applicable for contactless ApplicationIdentifier*/
 @property NSString *CVMLimit;
-@property NSString *FloorLimit;
-@property NSString *TLVData;
-@property NSString *TermCaps;
-@property NSString *TxnLimit;
-@property BOOL contactlessAID;
 
+/** Only applicable for contactless ApplicationIdentifier*/
+@property NSString *FloorLimit;
+
+/** Only applicable for contactless ApplicationIdentifier*/
+@property NSString *TLVData;
+
+/** Only applicable for contactless ApplicationIdentifier*/
+@property NSString *TermCaps;
+
+/** Only applicable for contactless ApplicationIdentifier*/
+@property NSString *TxnLimit;
 
 - (id)                           initWithRID:(NSString *)rid
                                      withPIX:(NSString *)pix
@@ -52,6 +59,16 @@
     withLowestSupportedICCApplicationVersion:(NSString *)LowestSupportedICCApplicationVersion
                            withPriorityIndex:(NSString *)priorityIndex
                withApplicationSelectionFlags:(NSString *)applicationSelectionFlags;
+
+- (id)                           initWithRID:(NSString *)rid
+                                     withPIX:(NSString *)pix
+                                     withAID:(NSString *)aid
+                        withApplicationLabel:(NSString *)label
+              withTerminalApplicationVersion:(NSString *)TerminalApplicationVersion
+    withLowestSupportedICCApplicationVersion:(NSString *)LowestSupportedICCApplicationVersion
+                           withPriorityIndex:(NSString *)priorityIndex
+               withApplicationSelectionFlags:(NSString *)applicationSelectionFlags
+                                 withTLVData:(NSString *)TLVData;
 
 - (id)                           initWithRID:(NSString *)rid
                                      withPIX:(NSString *)pix

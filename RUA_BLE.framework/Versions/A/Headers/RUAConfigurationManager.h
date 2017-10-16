@@ -13,7 +13,8 @@
 #import "RUAPublicKey.h"
 #import "RUADisplayControl.h"
 #import "RUAKeypadControl.h"
-
+#import "RUAFirmwareType.h"
+#import "RUAFirmwareChecksumType.h"
 
 @protocol RUAConfigurationManager <NSObject>
 
@@ -84,6 +85,16 @@
  */
 - (void)readVersion:(OnProgress)progress response:(OnResponse)response;
 
+/**
+ This is an Asynchronous method that sends the read key mapping command to the reader.<br>
+ <br>
+ When the reader processes the command, it returns the result as a map to  the OnResponse block passed.<br>
+ The map passed to the onResponse callback contains the following parameters as keys, <br>
+ @param response OnResponse block
+ @param progress OnProgress block
+ 
+ */
+- (void)readKeyMapping:(OnProgress)progress response:(OnResponse)response;
 /**
  This is an Asynchronous method that sends the reset device command to the reader.<br>
  <br>
@@ -229,60 +240,29 @@
                         response:(OnResponse)response;
 
 /**
- This command is used to configure options related to the card holder user interface.
- <br>
- @param cardInsertionTimeout timeout period
- @param merchantLanguageCode
- @param cardHolderLanguageSupport true to enable support for card holder language selection
- @param supportedLanguageCodes
- @param pinPadOptions refer to the table below for format of this field, <br>
- <table> <tbody>
- <tr><td>b7</td><td>b6</td><td>b5</td><td>b4</td><td>b3</td><td>b2</td><td>b1</td><td>b0</td><td>Meaning</td></tr>
- <tr><td>x</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>RFU</td></tr>
- <tr><td></td><td>1</td><td></td><td></td><td></td><td></td><td></td><td></td><td>Ignore ICC inserts when ICC is disabled in the EMV Start Transaction P2 field.</td></tr>
- <tr><td></td><td></td><td>1</td><td></td><td></td><td></td><td></td><td></td><td>Enable Enhanced Contactless Display Control</td></tr>
- <tr><td></td><td></td><td></td><td>1</td><td></td><td></td><td></td><td></td><td>Disable PIN-Pad Exception Handling</td></tr>
- <tr><td></td><td></td><td></td><td></td><td>1</td><td></td><td></td><td></td><td>Display “PIN Tries Exceeded” after last PIN failure</td></tr>
- <tr><td></td><td></td><td></td><td></td><td></td><td>1</td><td></td><td></td><td>Enable cardholder to confirm cancellation</td></tr>
- <tr><td></td><td></td><td></td><td></td><td></td><td></td><td>1</td><td></td><td>Disable PIN-Pad progress screens</td></tr>
- <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>1</td><td>Enable Call Card Issuer message</td></tr>
- </tbody></table>
- @param backlightControl 0 for manual control over the backlight which can be controlled by using the Level 1 Display Control command. <br>
-                         1 for automatic control which will switch the backlight on at the start of an EMVL2 transaction and off at the end.<br>
- @param currencyFormattingOption Allow the external device to change the way amounts are displayed: <br>
- 0 = Default format, e.g. £0.00 <br>
- 1 = Use cardholder language<br>
- 2 = Use Issuer Country Code<br>
- 3 = Use merchant (local) language<br>
- 4 = Use Terminal Country Code<br>
- @param currencyGroupingOption Allow the external device to control grouping of digits in amounts: <br>
- 0 = Default format, e.g. $1000.00 <br>
- 1 = Group into thousands, e.g. £1,000,000.00 <br>
- @param response OnResponse block
- @param progress OnProgress block
- */
-- (void) setUserInterfaceOptions:(int) cardInsertionTimeout
-         withDefaultLanguageCode:(RUALanguageCode)languageCode
-   withCardHolderLanguageSupport:(BOOL) cardHolderLanguageSupport
-      withSupportedLanguageCodes:(NSArray *) supportedLanguageCodes
-               withPinPadOptions:(Byte) pinPadOptions
-            withBackLightControl:(Byte) backlightControl
-    withCurrencyFormattingOption:(Byte) currencyFormattingOption
-      withCurrencyGroupingOption:(Byte) currencyGroupingOption
-                        progress:(OnProgress)progress
-                        response:(OnResponse)response;
-
-/**
  This is an Asynchronous method that sends the Submit aid list command to the reader.<br>
  <br>
  When the reader processes the command, it returns the result as a map to  the OnResponse block passed.<br>
  The map passed to the onResponse callback contains the following parameters as keys, <br><br>
- @param applicationIdentifiers the list of application identifiers
+ @param applicationIdentifiers the list of application identifiers <br>
+        FloorLimit,CVMLimit,TxnLimit,TermCaps and TLVData are only applicable for contactless application identifiers <br>
+        those properties are not valid for contact application identifiers <br>
  @param response OnResponse block
  @param progress OnProgress block
  @see ApplicationIdentifier
  */
 - (void)submitAIDList:(NSArray *)aids progress:(OnProgress)progress response:(OnResponse)response;
+
+/** This is an Asynchronous method that sends the Submit aid list command to the reader.<br>
+ <br>
+ When the reader processes the command, it returns the result as a map to the callback method onResponse on the DeviceResponseHandler passed.<br>
+ The map passed to the onResponse callback contains the following parameters as keys, <br><br>
+ @param applicationIdentifiers
+            the list of application identifiers,<br>Application Identifier must contain TLVData.<br>
+ @param response OnResponse block
+ @see ApplicationIdentifier
+*/
+- (void)submitAIDWithTLVDataList:(NSArray*) applicationIdentifiers response:(OnResponse)response;
 
 /**
  This is an Asynchronous method that sends the Submit public key command to the reader.<br>
@@ -314,6 +294,15 @@
  */
 
 - (id <RUADisplayControl> )getDisplayControl;
+
+/**
+ Returns the certificate file versions of the connected device.
+ @param response OnResponse block
+ @param progress OnProgress block
+ */
+
+- (void)readCertificateFilesVersion:(OnProgress)progress response:(OnResponse)response ;
+
 
 /**
  Returns keypad control of the roam device.
@@ -404,6 +393,21 @@
 - (void) enableContactless:(OnResponse)response;
 
 /**
+ This method enables RKI mode for RKI Injection process <br>
+ @param response OnResponse block
+ */
+- (void) enableRKIMode:(OnResponse)response;
+
+
+/**
+ *  This methos does the RKI Injection process
+ *
+ *  @param groupName      refers to the groupName of the device to do RKI Injection
+ *  @param response        OnResponse block
+ */
+- (void) triggerRKIWithGroupName:(NSString *) groupName response:(OnResponse)response;
+
+/**
  This method disables the contactless (turns OFF NFC card reader on the device) <br>
  @param response OnResponse block
  */
@@ -460,4 +464,48 @@
 
 
 - (void)setShutDownModeTime:(int)seconds res:(OnResponse)response;
+
+/**
+ * This is a Asynchronous method that sets the custom firmware version<br>
+ * <br>
+ * @param firmwareType enum to describe the type firmware that needs to be set
+ * @param version string which holds the value of the firmware type.
+ * @param response OnResponse block
+ * @see RUAFirmwareType
+ * When the reader processes the command, it returns the result as a map to the OnResponse block passed.<br>
+ */
+- (void)setFirmwareType:(RUAFirmwareType)firmwareType withVersion:(NSString*)version response:(OnResponse)response;
+
+/**
+ * This is a Asynchronous method that gets the custom firmware version<br>
+ * <br>
+ * @param firmwareType enum to describe the type firmware that needs to be returned
+ * @param response OnResponse block
+ * @see RUAFirmwareType
+ * When the reader processes the command, it returns the result as a map to the OnResponse block passed.<br>
+ */
+- (void)getFirmwareVersionStringForType:(RUAFirmwareType)firmwareType response:(OnResponse)response;
+
+/**
+ * This is a Asynchronous method that is used to configure the beeps<br>
+ * <br>
+ * @param readMagneticCardBeep BOOL describes, if reader should disable beep at when ready to read Magnetic Card data
+ * @param removeCardBeep BOOL describes, if reader should disable beep when card is ready to be removed
+ * @param EMVStartTransactionBeep BOOL describes, if reader should disable beep when ready to start EMV transaction
+ * @param response OnResponse block
+ * When the reader processes the command, it returns the result as a map to the OnResponse block passed.<br>
+ */
+- (void)configureReadMagneticCardBeep:(BOOL)disableReadMagneticCardBeep
+                       removeCardBeep:(BOOL)disableRemoveCardBeep
+           andEMVStartTransactionBeep:(BOOL)disableEMVStartTransactionBeep
+                             response:(OnResponse)response;
+
+/**
+ * This is a Asynchronous method that is used to get the checksum<br>
+ * <br>
+ * @param type RUAFirmwareChecksumType enum to describe the firmwaretype
+ * @param response OnResponse block
+ */
+-(void)getChecksumForType:(RUAFirmwareChecksumType)type response:(OnResponse)response;
+
 @end

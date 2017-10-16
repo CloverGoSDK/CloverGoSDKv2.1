@@ -12,9 +12,8 @@
 
 typedef enum {
 	RUACommunicationInterfaceBluetooth = 0,
-    RUACommunicationInterfaceMFIBluetooth = 1,
-	RUACommunicationInterfaceAudioJack = 2,
-	RUACommunicationInterfaceUnknown = 3
+	RUACommunicationInterfaceAudioJack = 1,
+	RUACommunicationInterfaceUnknown = 2
 } RUACommunicationInterface;
 
 /**

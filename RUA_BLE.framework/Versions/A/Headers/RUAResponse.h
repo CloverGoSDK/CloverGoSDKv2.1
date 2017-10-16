@@ -266,6 +266,22 @@ typedef  enum {
     /** 8EA2 P2PE encrypt error*/
     RUAErrorCodeP2PEEncryptError = 96,
 
+    /**
+     Certificate Filve VErsion not available for the reader
+     */
+    RUAErrorCodeCertificateFilesVersionInfoNotAvailable =97,
+    /** PinByPass*/
+    RUAErrorCodePinByPass = 98,
+    
+    RUAErrorVASBadValue = 99,
+    
+    RUAErrorVASBadLength = 100,
+    
+    RUAErrorVASParamerterNotSet = 101,
+    
+    /** VAS_MAX_MERCHANTS_NB_REACHED_ERR (Max Merchants Number (24) reached)*/
+    RUAErrorVASMaxMerchantLimitReached = 102,
+    
 } RUAErrorCode;
 
 
