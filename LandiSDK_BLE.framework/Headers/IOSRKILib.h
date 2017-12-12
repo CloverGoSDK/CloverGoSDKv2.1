@@ -30,5 +30,6 @@ FOUNDATION_EXPORT const unsigned char IOSRKILibVersionString[];
 #import "MFIBluetoothManager.h"
 #import "RDeviceInfo.h"
 #import "TMSDownloadCtrl.h"
+#import "LDInfoParser.h"
 
 

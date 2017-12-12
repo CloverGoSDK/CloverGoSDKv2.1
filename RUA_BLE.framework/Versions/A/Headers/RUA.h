@@ -17,7 +17,9 @@
 #define RUA_DEBUG_LOG(...)
 #endif
 
-static NSString *RUA_Version = @"1.7.1.384";
+static NSString *RUA_Version = @"1.7.3.9";
+
+typedef void (^OnRepackageUNSFileHandler)(BOOL repackageSucceed);
 
 @interface RUA : NSObject
 
@@ -38,6 +40,21 @@ static NSString *RUA_Version = @"1.7.1.384";
  *
  */
 + (void)setProductionMode:(BOOL)enable;
+
+/**
+ * Sets if the ROAMreaderUnifiedAPI has to post response on UI thread.<br>
+ *
+ * By default, the response will be posted on UI thread.
+ *
+ * @param enable boolean to post response on UI thread
+ *
+ */
++ (void)setPostResponseOnUIThread:(BOOL)postResponseOnUIThread;
+
+/**
+ Returns true if ROAMreaderUnifiedAPI has to post response on UI thread
+ */
++ (BOOL)postResponseOnUIThread;
 
 /**
  Returns true if RUA log messages are enabled
@@ -87,6 +104,18 @@ static NSString *RUA_Version = @"1.7.1.384";
  */
 + (NSString *) versionString __deprecated_msg("use RUA_Version instead");
 
++ (BOOL)isUpdateRequired:(NSString*)filePath readerInfo:(RUAReaderVersionInfo*)readerVersionInfo;
+
+/**
+ * Returns a boolean to indicate if the UNS files need to be loaded onto the terminal.
+ *
+ * @return boolean to indicate if the UNS files need to be loaded onto the terminal
+ * @see RUAReaderVersionInfo, RUAFileVersionInfo
+ *
+ */
+
++ (BOOL)isUpdateRequired:(NSArray*)UNSFiles readerVersionInfo:(RUAReaderVersionInfo*)readerVersionInfo;;
+
 /**
  * Returns a list of file version descriptions for each file
  * contained within the specified UNS file.
@@ -95,5 +124,15 @@ static NSString *RUA_Version = @"1.7.1.384";
  */
 
 + (NSArray*)getUnsFileVersionInfo:(NSString*)filePath;
+
+/**
+ * Repackage the speicified UNS file with reader version info
+ * @param fromFilePath original UNS file path (eg. /var/mobile/Containers/Data/Application/447B9EDB-0B3E-49F2-98A5-6B5674401C61/Documents/original.uns)
+ * @param toFilePath file save path for the repackage UNS file (eg. /var/mobile/Containers/Data/Application/447B9EDB-0B3E-49F2-98A5-6B5674401C61/Documents/newfile.uns)
+ * @param readerVersionInfo reader version information
+ * @see RUAReaderVersionInfo
+ *
+ */
++ (void)repackageUNSFile:(NSString *)fromFilePath toFilePath:(NSString *)toFilePath andReaderVersion:(RUAReaderVersionInfo *)readerVersionInfo response:(OnRepackageUNSFileHandler)handler;
 
 @end

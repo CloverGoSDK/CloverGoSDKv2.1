@@ -214,7 +214,7 @@ SWIFT_CLASS("_TtC14clovergoclient25CardApplicationIdentifier")
 
 @class ReaderInfo;
 enum CardReaderErrorEvent : NSInteger;
-enum CardReaderEvent : NSInteger;
+enum CardReaderInitializationEvent : NSInteger;
 
 SWIFT_PROTOCOL("_TtP14clovergoclient18CardReaderDelegate_")
 @protocol CardReaderDelegate
@@ -222,7 +222,7 @@ SWIFT_PROTOCOL("_TtP14clovergoclient18CardReaderDelegate_")
 - (void)onDisconnectedWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
 - (void)onErrorWithEvent:(enum CardReaderErrorEvent)event;
 - (void)onReadyWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
-- (void)onReaderResetProgressWithEvent:(enum CardReaderEvent)event;
+- (void)onReaderResetProgressWithEvent:(enum CardReaderInitializationEvent)event;
 - (void)onCardReaderDiscoveredWithReaders:(NSArray<ReaderInfo *> * _Nonnull)readers;
 @optional
 - (void)onPlugged;
@@ -238,25 +238,14 @@ typedef SWIFT_ENUM(NSInteger, CardReaderErrorEvent) {
   CardReaderErrorEventPairing_error = 6,
 };
 
-typedef SWIFT_ENUM(NSInteger, CardReaderEvent) {
-  CardReaderEventCard_swiped = 0,
-  CardReaderEventCard_tapped = 1,
-  CardReaderEventSwipe_failed = 2,
-  CardReaderEventEmv_card_swiped_error = 3,
-  CardReaderEventEmv_dip_failed_3_attempts = 4,
-  CardReaderEventEmv_card_dip_failed = 5,
-  CardReaderEventEmv_card_inserted = 6,
-  CardReaderEventClear_aid_pk_complete = 7,
-  CardReaderEventAid_flush_complete = 8,
-  CardReaderEventPublic_key_flush_complete = 9,
-  CardReaderEventDol_flush_complete = 10,
-  CardReaderEventInitialization_complete = 11,
-  CardReaderEventCalibration_in_progress = 12,
-  CardReaderEventEmv_card_removed = 13,
-  CardReaderEventPairing_complete = 14,
-  CardReaderEventContactless_failed_try_again = 15,
-  CardReaderEventSwipe_dip_tap_card = 16,
-  CardReaderEventRemove_card = 17,
+typedef SWIFT_ENUM(NSInteger, CardReaderInitializationEvent) {
+  CardReaderInitializationEventClear_aid_pk_complete = 0,
+  CardReaderInitializationEventAid_flush_complete = 1,
+  CardReaderInitializationEventPublic_key_flush_complete = 2,
+  CardReaderInitializationEventDol_flush_complete = 3,
+  CardReaderInitializationEventInitialization_complete = 4,
+  CardReaderInitializationEventCalibration_in_progress = 5,
+  CardReaderInitializationEventPairing_complete = 6,
 };
 
 typedef SWIFT_ENUM(NSInteger, CardType) {
@@ -398,25 +387,40 @@ SWIFT_CLASS("_TtC14clovergoclient7TaxRate")
 @end
 
 @class TransactionResult;
+enum TransactionErrorEvent : NSInteger;
 enum TransactionEvent : NSInteger;
 
 SWIFT_PROTOCOL("_TtP14clovergoclient19TransactionDelegate_")
 @protocol TransactionDelegate
 - (void)onTransactionResponseWithTransactionResponse:(TransactionResult * _Nonnull)transactionResponse;
 - (void)onErrorWithError:(CloverGoError * _Nonnull)error;
-- (void)proceedOnErrorWithEvent:(enum TransactionEvent)event proceedOnErrorDelegate:(id <ProceedOnError> _Nonnull)proceedOnErrorDelegate;
+- (void)proceedOnErrorWithEvent:(enum TransactionErrorEvent)event proceedOnErrorDelegate:(id <ProceedOnError> _Nonnull)proceedOnErrorDelegate;
 - (void)onAidMatchWithCardApplicationIdentifiers:(NSArray<CardApplicationIdentifier *> * _Nonnull)cardApplicationIdentifiers delegate:(id <AidSelection> _Nonnull)delegate;
-- (void)onProgressWithEvent:(enum CardReaderEvent)event;
+- (void)onProgressWithEvent:(enum TransactionEvent)event;
 @optional
 - (void)addOrderNoteWithDelegate:(id <AddOrderNoteDelegate> _Nonnull)delegate;
 @end
 
+typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
+  TransactionErrorEventAvs_failure = 0,
+  TransactionErrorEventDuplicate_transaction = 1,
+  TransactionErrorEventOffline = 2,
+  TransactionErrorEventOffline_payment_limit_exceeded = 3,
+  TransactionErrorEventPartial_auth = 4,
+};
+
 typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
-  TransactionEventAvs_failure = 0,
-  TransactionEventDuplicate_transaction = 1,
-  TransactionEventOffline = 2,
-  TransactionEventOffline_payment_limit_exceeded = 3,
-  TransactionEventPartial_auth = 4,
+  TransactionEventCard_swiped = 0,
+  TransactionEventCard_tapped = 1,
+  TransactionEventSwipe_failed = 2,
+  TransactionEventEmv_card_swiped_error = 3,
+  TransactionEventEmv_dip_failed_3_attempts = 4,
+  TransactionEventEmv_card_dip_failed = 5,
+  TransactionEventEmv_card_inserted = 6,
+  TransactionEventEmv_card_removed = 7,
+  TransactionEventContactless_failed_try_again = 8,
+  TransactionEventSwipe_dip_tap_card = 9,
+  TransactionEventRemove_card = 10,
 };
 
 

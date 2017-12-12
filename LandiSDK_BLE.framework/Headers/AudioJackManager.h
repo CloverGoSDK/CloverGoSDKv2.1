@@ -52,6 +52,7 @@
 #define ERROR_AUDIOJACK_EXCHANGE_NOT_COMPLATE (-1)
 #define ERROR_AUDIOJACK_DEVICE_NOT_OPEN (-2)
 #define ERROR_AUDIOJACK_NO_DEVICE_DETECTED (-4)
+#define ERROR_AUDIOJACK_USER_ABORT (-7)
 // cancelExchange
 #define ERROR_AUDIOJACK_CANCEL_NOT_NEED (-1)
 #define ERROR_AUDIOJACK_BE_CANCELING (-3)
@@ -77,6 +78,7 @@
 -(int)exchangeData:(NSData *)data timeout:(long)timeout;
 -(int)cancelExchange;
 -(BOOL)isConnected;
+-(void)breakOpenDevice;
 
 
 

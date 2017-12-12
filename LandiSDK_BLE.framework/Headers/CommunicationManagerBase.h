@@ -73,8 +73,14 @@ typedef enum{
 -(void)closeDevice;
 -(void)closeResource;
 -(BOOL)isConnected;
+
+
+-(void)breakOpenDevice;
+
+
 +(void)download:(RDeviceInfo*)di path:(NSString*)filePath callback:(id<CommDownloadCallback>)cb;
 +(void)download:(RDeviceInfo*)di path:(NSString*)filePath filter:(LDPlatformFilter*)pf callback:(id<CommDownloadCallback>)cb;
++(void)download:(RDeviceInfo*)di data:(NSData*)fileData callback:(id<CommDownloadCallback>)cb;
 //+(void)TMSDownload:(RDeviceInfo*)di path:(NSString*)filePath callback:(id<CommDownloadCallback>)cb;
 +(TMSDownloadCtrl*)getTMSDownloadCtrl;
 

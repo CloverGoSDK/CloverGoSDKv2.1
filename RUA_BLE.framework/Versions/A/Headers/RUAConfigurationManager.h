@@ -14,7 +14,6 @@
 #import "RUADisplayControl.h"
 #import "RUAKeypadControl.h"
 #import "RUAFirmwareType.h"
-#import "RUAFirmwareChecksumType.h"
 
 @protocol RUAConfigurationManager <NSObject>
 
@@ -499,13 +498,5 @@
                        removeCardBeep:(BOOL)disableRemoveCardBeep
            andEMVStartTransactionBeep:(BOOL)disableEMVStartTransactionBeep
                              response:(OnResponse)response;
-
-/**
- * This is a Asynchronous method that is used to get the checksum<br>
- * <br>
- * @param type RUAFirmwareChecksumType enum to describe the firmwaretype
- * @param response OnResponse block
- */
--(void)getChecksumForType:(RUAFirmwareChecksumType)type response:(OnResponse)response;
 
 @end

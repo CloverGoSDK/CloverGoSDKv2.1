@@ -1363,30 +1363,13 @@ typedef NS_ENUM(NSInteger, RUAParameter) {
      Returns a boolean value, to indicate if device is charging
      */
     RUAParameterIsDeviceCharging = 536,
-
+    
     /**
      Returns the redacted card number
      */
     RUAParameterRedactedCardNumber= 537,
 
-    //Apple VAS Responses
-    RUAParameterVASVersion = 538,
-    
-    RUAParameterVASMerchantsCount = 539,
-    
-    RUAParameterLastVASErrorMessage = 540,
-    
-    RUAParameterVASExchangedMessageLog = 541,
-    
-    RUAParameterFirmwareVersionString = 542,
-
-    RUAParameterVASData = 543,
-    
-    RUAParameterShouldProceedWithPayment = 544,
-    
-    RUAParameterStartVASResponseCode = 545,
-    
-    RUAParameterFirmwareChecksumInfo = 546,
+    RUAParameterFirmwareVersionString = 538,
     
     /**
      DF8232 : Enable US Quick Chip Mode
@@ -1398,7 +1381,7 @@ typedef NS_ENUM(NSInteger, RUAParameter) {
      03  - Enable Mastercard & Visa
      * */
     RUAParameterEnableUSQuickChipMode = 996,
-
+    
     RUAParameterP2Field = 997,
 
     RUAParameterEMVTLVData = 998,

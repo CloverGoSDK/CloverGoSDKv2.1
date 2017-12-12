@@ -37,12 +37,8 @@
 - (id)initWithUNSFile:(LDTmsFileVersionInfo*)ldtFileversionInfo;
 - (id)initWithUNSJson:(NSString*)UNSJson;
 - (id)init:(NSString*)infoFromReadVersion ;
-- (NSString *)toString;
-- (BOOL)namePortionMatches:(RUAFileVersionInfo *)info;
-/**
- * Returns 1 if this object's versioning members are newer,
- * 0 if the same, -1 if older than the ones of the object passed in..
- */
-- (int)compareWith:(RUAFileVersionInfo *)info;
+- (NSString *) toString;
+- (BOOL) namePortionMatches:(RUAFileVersionInfo *)info;
+- (BOOL) isNewerThan:(RUAFileVersionInfo *)info;
 
 @end

@@ -210,12 +210,6 @@ SWIFT_CLASS("_TtC17CloverGoReaderSDK10CardReader")
 @end
 
 
-SWIFT_CLASS("_TtC17CloverGoReaderSDK14CardReaderInfo")
-@interface CardReaderInfo : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC17CloverGoReaderSDK23RP350TransactionManager")
 @interface RP350TransactionManager : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;

@@ -273,15 +273,6 @@ typedef  enum {
     /** PinByPass*/
     RUAErrorCodePinByPass = 98,
     
-    RUAErrorVASBadValue = 99,
-    
-    RUAErrorVASBadLength = 100,
-    
-    RUAErrorVASParamerterNotSet = 101,
-    
-    /** VAS_MAX_MERCHANTS_NB_REACHED_ERR (Max Merchants Number (24) reached)*/
-    RUAErrorVASMaxMerchantLimitReached = 102,
-    
 } RUAErrorCode;
 
 

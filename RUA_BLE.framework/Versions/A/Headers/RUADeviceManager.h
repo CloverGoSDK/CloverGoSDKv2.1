@@ -116,6 +116,11 @@ typedef  enum {
 - (void)releaseDevice:(id <RUAReleaseHandler>)releaseHandler;
 
 /**
+ Cancels any pending connection attempt to reader by sending a stop command.
+ */
+-(void)stopInitialization;
+
+/**
  Discovers the available devices for duration
  *
  @param searchListener the callback handler
@@ -160,16 +165,6 @@ typedef  enum {
  */
 - (void)getBatteryStatus:(OnResponse)response;
 
-/**
- This is an Asynchronous method that returns the battery level and charging status of a device. <br>
- <br>
- When the reader processes the command, it returns the result as a map to  the OnResponse block passed.<br>
- The map passed to the onResponse callback contains the following parameters as keys, 
- RUAParameterBatteryLevel,
- RUAParameterIsDeviceCharging<br>
- @param response OnResponse block
- */
-- (void)getBatteryLevelWithChargingStatus:(OnResponse)response;
 
 /**
  Asynchronous method that sets the card reader in firmware update mode

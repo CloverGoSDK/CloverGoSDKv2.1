@@ -235,104 +235,19 @@ typedef NS_ENUM (NSInteger, RUACommand) {
     RUACommandSubmitAIDsWithTLVDataList = 45,
     
     /**
-     * This command returns the device's current battery status and battery level
-     */
-    RUACommandBatteryInfoWithChargingStatus = 46,
-    
-    /**
      * This command is used to set the Firmware Version String
      */
-    RUACommandSetFirmwareVersionString = 47,
+    RUACommandSetFirmwareVersionString = 46,
     
     /**
      * This command is used to get the Firmware Version String
      */
-    RUACommandGetFirmwareVersionString = 48,
-
+    RUACommandGetFirmwareVersionString = 47,
+    
     /**
      * This command is used to configure beeps
      */
-    RUACommandConfigureBeep = 49,
-    
-    /**
-     *  This command is used to Get the VAS Version
-     */
-    RUACommandGetVASVersion = 50,
-    
-    /**
-     *  This command is used to get the count of VAS merchants
-     */
-    RUACommandGetVASMerchantCount = 51,
-    
-    /**
-     *  This command is used to clear the VAS merchants
-     */
-    RUACommandClearVASMerchants = 52,
-    
-    /**
-     *  This command is used to get VAS error message
-     */
-    RUACommandGetVASErrorMessage = 53,
-    
-    /**
-     *  This command is used to activate VAS exchange message logs
-     */
-    RUACommandActivateVASExchangedMessageLog = 54,
-    
-    /**
-     *  This command is used to deactivate VAS exchange message logs
-     */
-    RUACommandDeactivateVASExchangedMessageLog = 55,
-    
-    /**
-     *  This command is used to get VAS exchange message logs
-     */
-    RUACommandGetVASExchangedMessageLog = 56,
-    
-    /**
-     *  This command is used to enable VAS Mode
-     */
-    RUACommandEnableVASMode = 57,
-    
-    /**
-     *  This command is used to get VAS Data
-     */
-    RUACommandGetVASData = 58,
-    
-    /**
-     *  This command is used to enable VAS PLSE State
-     */
-    RUACommandEnableVASPLSEState = 59,
-    
-    /**
-     *  This command is used to set VAS Unpredictable Number
-     */
-    RUACommandSetVASUnpredictableNumber = 60,
-    
-    /**
-     *  This command is used to set VAS Application Version
-     */
-    RUACommandSetVASApplicationVersion = 61,
-    
-    /**
-     *  This command is used to add VAS Merchant
-     */
-    RUACommandAddVASMerchant = 62,
-    
-    /**
-     *  This command is used to enable VAS Mode for merchant
-     */
-    RUACommandEnableVASModeForMerchant = 63,
-    
-    /**
-     *  This command is used to start VAS
-     */
-    RUACommandStartVAS = 64,
-    
-    /**
-     * This command is used to get the checksum for firmware type
-     */
-    RUACommandGetFirmwareChecksum = 65,
+    RUACommandConfigureBeep = 48,
     
 	RUACommandUnknown = 99
 };

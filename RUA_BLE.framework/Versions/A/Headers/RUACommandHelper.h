@@ -14,7 +14,6 @@
 #import "RUAParameter.h"
 #import "RUACommand.h"
 #import "RUAEnumerationHelper.h"
-#import "RUAVASMode.h"
 
 typedef struct TLV {
 	RUAParameter parameter;
@@ -28,7 +27,6 @@ typedef struct TLV {
 @interface RUACommandHelper : NSObject
 
 + (NSData *)getBatteryInfoCommand;
-+ (NSData *)getBatteryInfoCommandWithChargingStatus;
 + (NSData *)getCancelWaitCommand;
 + (NSData *)getClearAIDsListCommand;
 + (NSData *)getClearPubliKeysCommand;
@@ -72,47 +70,15 @@ typedef struct TLV {
 
 + (NSData *)getShutDownModeTimeCommand:(int)seconds;
 
-+ (NSData *)getVASVersionCommand;
-
-+ (NSData *)getMerchantsCountCommand;
-
-+ (NSData *)getClearVASMerchantsCommand;
-
-+ (NSData *)getVASErrorMessageCommand;
-
-+ (NSData *)getActivateVASExchangedMessageLogCommand;
-
-+ (NSData *)getDeactivateVASExchangedMessageLogCommand;
-
-+ (NSData *)getVASExchangedMessageLogCommand;
-
 + (NSData *)retrieveCommandToSetFirmwareType:(RUAFirmwareType)firmwareType withVersionString:(NSString*)versionString;
 
 + (NSData *)retrieveCommandToGetVersionForFirmwareType:(RUAFirmwareType)firmwareType;
 
 + (NSData *)getCommandToConfigureReadMagneticCardBeep:(BOOL)disableReadMagneticCardBeep removeCardBeep:(BOOL)disableRemoveCardBeep andEMVStartTransactionBeep:(BOOL)disableEMVStartTransactionBeep;
 
-+ (NSData *)getEnableVASModeCommand:(RUAVASMode)vasMode;
-
-+ (NSData *)getVASDataCommandForMerchant:(NSUInteger)merchantIndex;
-
-+ (NSData *)getEnableVASPLSEStateCommandforState:(BOOL)isEnabled;
-
-+ (NSData *)retrieveSetVASUnpredictableNumberCommandFor:(NSString*)unpredictableNumber;
-
-+ (NSData *)retrieveSetVASApplicationVersionCommandFor:(NSString*)applicationVersion;
-
 + (RUAErrorCode)getRUAErrorCode:(NSString *)readerError;
 
 + (NSData *)getKeyedCardData;
-
-+ (NSData *)retrieveCommandToGetChecksumForFirmwareType:(RUAFirmwareChecksumType)firmwareChecksumType;
-
-+ (NSData *)getEnableVASModeCommand:(RUAVASMode)vasMode forMerchant:(NSString*)merchantId;
-
-+ (NSData *)getAddVASMerchantCommand:(RUAVASMode)vasMode merchantID:(NSString*)merchantId merchantURL:(NSString*)merchantURL categoryFilter:(NSString*)categoryFilter;
-
-+ (NSData *)getStartVASCommandWithTimeout:(NSUInteger)timeout transactionEventThatInteruptVASInDualMode:(RUAVASTransactionEvent)transactionsEvents;
 
 /**
  Description of dictionary containing RUA parameters and values
