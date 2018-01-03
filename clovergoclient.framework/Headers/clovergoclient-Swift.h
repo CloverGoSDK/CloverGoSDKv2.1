@@ -421,6 +421,7 @@ typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
   TransactionEventContactless_failed_try_again = 8,
   TransactionEventSwipe_dip_tap_card = 9,
   TransactionEventRemove_card = 10,
+  TransactionEventProcessing_transaction = 11,
 };
 
 
