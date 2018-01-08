@@ -312,12 +312,6 @@ SWIFT_CLASS("_TtC14clovergoclient12ItemCategory")
 @end
 
 
-SWIFT_CLASS("_TtC14clovergoclient7KeyInfo")
-@interface KeyInfo : NSObject
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
 SWIFT_CLASS("_TtC14clovergoclient12KeyedRequest")
 @interface KeyedRequest : NSObject
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
@@ -406,7 +400,8 @@ typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
   TransactionErrorEventDuplicate_transaction = 1,
   TransactionErrorEventOffline = 2,
   TransactionErrorEventOffline_payment_limit_exceeded = 3,
-  TransactionErrorEventPartial_auth = 4,
+  TransactionErrorEventOffline_threshold_limit_exceeded = 4,
+  TransactionErrorEventPartial_auth = 5,
 };
 
 typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
