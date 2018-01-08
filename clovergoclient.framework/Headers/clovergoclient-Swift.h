@@ -399,9 +399,8 @@ typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
   TransactionErrorEventAvs_failure = 0,
   TransactionErrorEventDuplicate_transaction = 1,
   TransactionErrorEventOffline = 2,
-  TransactionErrorEventOffline_payment_limit_exceeded = 3,
-  TransactionErrorEventOffline_threshold_limit_exceeded = 4,
-  TransactionErrorEventPartial_auth = 5,
+  TransactionErrorEventOffline_threshold_limit_exceeded = 3,
+  TransactionErrorEventPartial_auth = 4,
 };
 
 typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
