@@ -413,9 +413,12 @@ typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
   TransactionEventEmv_card_inserted = 6,
   TransactionEventEmv_card_removed = 7,
   TransactionEventContactless_failed_try_again = 8,
-  TransactionEventSwipe_dip_tap_card = 9,
-  TransactionEventRemove_card = 10,
-  TransactionEventProcessing_transaction = 11,
+  TransactionEventContactless_failed_try_contact = 9,
+  TransactionEventPlease_see_phone = 10,
+  TransactionEventMultiple_contactless_cards_detected = 11,
+  TransactionEventSwipe_dip_tap_card = 12,
+  TransactionEventRemove_card = 13,
+  TransactionEventProcessing_transaction = 14,
 };
 
 
