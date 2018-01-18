@@ -250,12 +250,12 @@ typedef SWIFT_ENUM(NSInteger, CardReaderInitializationEvent) {
 
 typedef SWIFT_ENUM(NSInteger, CardType) {
   CardTypeVISA = 0,
-  CardTypeMASTERCARD = 1,
+  CardTypeMC = 1,
   CardTypeDISCOVER = 2,
   CardTypeAMEX = 3,
   CardTypeDINNERS = 4,
   CardTypeJCB = 5,
-  CardTypeUNIONPAY = 6,
+  CardTypeCHINA_UNION_PAY = 6,
   CardTypeDEFAULT = 7,
 };
 
