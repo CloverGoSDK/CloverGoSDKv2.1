@@ -204,6 +204,7 @@ typedef SWIFT_ENUM(NSInteger, CLVGoTransactionType) {
   CLVGoTransactionTypeManualrefund = 3,
   CLVGoTransactionTypePreauth = 4,
   CLVGoTransactionTypePurchase = 5,
+  CLVGoTransactionTypeTokenize = 6,
 };
 
 
@@ -236,6 +237,8 @@ typedef SWIFT_ENUM(NSInteger, CardReaderErrorEvent) {
   CardReaderErrorEventCard_not_supported = 4,
   CardReaderErrorEventCard_reader_transaction_aborted = 5,
   CardReaderErrorEventPairing_error = 6,
+  CardReaderErrorEventFirmware_download_failed = 7,
+  CardReaderErrorEventFirmware_update_failed = 8,
 };
 
 typedef SWIFT_ENUM(NSInteger, CardReaderInitializationEvent) {
@@ -246,6 +249,10 @@ typedef SWIFT_ENUM(NSInteger, CardReaderInitializationEvent) {
   CardReaderInitializationEventInitialization_complete = 4,
   CardReaderInitializationEventCalibration_in_progress = 5,
   CardReaderInitializationEventPairing_complete = 6,
+  CardReaderInitializationEventDownloading_firmware = 7,
+  CardReaderInitializationEventFirware_download_complete = 8,
+  CardReaderInitializationEventUpdating_firmware = 9,
+  CardReaderInitializationEventFirmware_update_complete = 10,
 };
 
 typedef SWIFT_ENUM(NSInteger, CardType) {
