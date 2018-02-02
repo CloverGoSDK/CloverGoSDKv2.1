@@ -408,6 +408,7 @@ typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
   TransactionErrorEventOffline = 2,
   TransactionErrorEventOffline_threshold_limit_exceeded = 3,
   TransactionErrorEventPartial_auth = 4,
+  TransactionErrorEventCvv_failure = 5,
 };
 
 typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
