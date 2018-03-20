@@ -173,6 +173,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #endif
 #if __has_feature(modules)
 @import ObjectiveC;
+@import Foundation;
 #endif
 
 #pragma clang diagnostic ignored "-Wproperty-attribute-mismatch"
@@ -210,6 +211,8 @@ typedef SWIFT_ENUM(NSInteger, CLVGoTransactionType) {
 
 SWIFT_CLASS("_TtC14clovergoclient25CardApplicationIdentifier")
 @interface CardApplicationIdentifier : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull applicationLabel;
+@property (nonatomic, readonly, copy) NSString * _Nonnull applicationIdentifier;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -273,22 +276,99 @@ SWIFT_CLASS("_TtC14clovergoclient11CardUtility")
 @end
 
 enum Env : NSInteger;
+@class Inventory;
+@class CloverGoError;
+@class TaxRate;
+@class KeyedRequest;
+@protocol TransactionDelegate;
+@class Order;
+@class Refund;
+@class Merchant;
+@class Transaction;
+@class OfflineStats;
 
 SWIFT_CLASS("_TtC14clovergoclient8CloverGo")
 @interface CloverGo : NSObject
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL allowAutoConnect;)
++ (BOOL)allowAutoConnect SWIFT_WARN_UNUSED_RESULT;
++ (void)setAllowAutoConnect:(BOOL)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideDuplicateTransaction;)
++ (BOOL)overrideDuplicateTransaction SWIFT_WARN_UNUSED_RESULT;
++ (void)setOverrideDuplicateTransaction:(BOOL)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideAddressVerification;)
++ (BOOL)overrideAddressVerification SWIFT_WARN_UNUSED_RESULT;
++ (void)setOverrideAddressVerification:(BOOL)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationID;)
++ (NSString * _Nonnull)remoteApplicationID SWIFT_WARN_UNUSED_RESULT;
++ (void)setRemoteApplicationID:(NSString * _Nonnull)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationVersion;)
++ (NSString * _Nonnull)remoteApplicationVersion SWIFT_WARN_UNUSED_RESULT;
++ (void)setRemoteApplicationVersion:(NSString * _Nonnull)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL enableQuickChip;)
++ (BOOL)enableQuickChip SWIFT_WARN_UNUSED_RESULT;
++ (void)setEnableQuickChip:(BOOL)value;
++ (void)enableLogs:(BOOL)enable;
++ (BOOL)isLogsEnabled SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingStarted;)
++ (NSNotification * _Nonnull)OfflinePaymentProcessingStarted SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingCompleted;)
++ (NSNotification * _Nonnull)OfflinePaymentProcessingCompleted SWIFT_WARN_UNUSED_RESULT;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingSuspended;)
++ (NSNotification * _Nonnull)OfflinePaymentProcessingSuspended SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 - (void)initializeWithAccessToken:(NSString * _Nonnull)accessToken apiKey:(NSString * _Nonnull)apiKey secret:(NSString * _Nonnull)secret env:(enum Env)env;
+- (void)initializeWithApiKey:(NSString * _Nonnull)apiKey secret:(NSString * _Nonnull)secret env:(enum Env)env;
+- (void)loadInventoryWithForceReload:(BOOL)forceReload success:(void (^ _Nonnull)(NSArray<Inventory *> * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)loadTaxesWithForceReload:(BOOL)forceReload success:(void (^ _Nonnull)(NSArray<TaxRate *> * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)sendReceiptWithOrderId:(NSString * _Nonnull)orderId email:(NSString * _Nullable)email phone:(NSString * _Nullable)phone;
+- (void)captureSignatureWithTipWithTransactionId:(NSString * _Nonnull)transactionId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy tip:(NSInteger)tip;
+- (void)captureSignatureWithTransactionId:(NSString * _Nonnull)transactionId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy;
+- (void)doKeyedTransactionWithKeyedRequest:(KeyedRequest * _Nonnull)keyedRequest delegate:(id <TransactionDelegate> _Nonnull)delegate;
+- (void)doCardReaderTransactionWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo order:(Order * _Nonnull)order delegate:(id <TransactionDelegate> _Nonnull)delegate;
+- (void)doReadCardDataWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo delegate:(id <TransactionDelegate> _Nonnull)delegate;
+- (void)cancelCardReaderTransactionWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+- (void)useReaderWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo delegate:(id <CardReaderDelegate> _Nonnull)delegate;
+- (void)scanForBluetoothReaders;
+- (BOOL)isConnectedWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo SWIFT_WARN_UNUSED_RESULT;
+- (void)releaseReaderWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
+- (void)connectToBTReaderWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+- (void)resetReaderWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+- (void)doCapturePreAuthTransactionWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount tipAmount:(NSInteger)tipAmount success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)doCloseOutTransactionWithSuccess:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)doRefundTransactionWithPaymentId:(NSString * _Nonnull)paymentId success:(void (^ _Nonnull)(Refund * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)doRefundTransactionWithAmountWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount success:(void (^ _Nonnull)(Refund * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)doAddTipTransactionWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)doVoidTransactionWithPaymentId:(NSString * _Nonnull)paymentId orderId:(NSString * _Nonnull)orderId voidReason:(NSString * _Nullable)voidReason success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)deleteOrderWithOrderId:(NSString * _Nonnull)orderId success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)getMerchantInfoWithSuccess:(void (^ _Nonnull)(Merchant * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+- (void)getOfflineTransactionHistoryWithSuccess:(void (^ _Nonnull)(NSArray<Transaction *> * _Nullable))success;
+- (void)getOfflineStatsWithSuccess:(void (^ _Nonnull)(OfflineStats * _Nonnull))success;
+- (void)reRunFailedOfflineTransactions;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient13CloverGoError")
 @interface CloverGoError : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull code;
+@property (nonatomic, readonly, copy) NSString * _Nonnull message;
+- (nonnull instancetype)initWithCode:(NSString * _Nonnull)code message:(NSString * _Nonnull)message OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient10CustomItem")
 @interface CustomItem : NSObject
+@property (nonatomic, strong) TaxRate * _Nullable taxRate;
+@property (nonatomic, copy) NSString * _Nonnull name;
+@property (nonatomic) NSInteger price;
+@property (nonatomic, copy) NSDate * _Nullable createdDate;
+@property (nonatomic) NSInteger quantity;
+@property (nonatomic, readonly) NSInteger total;
+@property (nonatomic, readonly) NSInteger tax;
+- (nonnull instancetype)initWithName:(NSString * _Nonnull)name price:(NSInteger)price quantity:(NSInteger)quantity OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithName:(NSString * _Nonnull)name price:(NSInteger)price quantity:(NSInteger)quantity taxRate:(TaxRate * _Nullable)taxRate createdDate:(NSDate * _Nullable)createdDate;
+- (void)updateWithName:(NSString * _Nonnull)name price:(NSInteger)price quantity:(NSInteger)quantity taxRate:(TaxRate * _Nullable)taxRate;
+- (void)delete;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -300,33 +380,59 @@ typedef SWIFT_ENUM(NSInteger, Env) {
   EnvQa = 4,
 };
 
+@class ItemCategory;
 
 SWIFT_CLASS("_TtC14clovergoclient9Inventory")
 @interface Inventory : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull id;
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, copy) NSString * _Nullable alternateName;
+@property (nonatomic, readonly) NSInteger price;
+@property (nonatomic, readonly, copy) NSString * _Nullable priceType;
+@property (nonatomic) NSInteger stockCount;
+@property (nonatomic, copy) NSArray<TaxRate *> * _Nullable taxRates;
+@property (nonatomic, copy) NSArray<ItemCategory *> * _Nullable categories;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient13InventoryItem")
 @interface InventoryItem : NSObject
+@property (nonatomic, strong) Inventory * _Nonnull item;
+@property (nonatomic) NSInteger quantity;
+@property (nonatomic, readonly) NSInteger total;
+@property (nonatomic, readonly) NSInteger tax;
+- (nonnull instancetype)initWithInventory:(Inventory * _Nonnull)inventory quantity:(NSInteger)quantity OBJC_DESIGNATED_INITIALIZER;
+- (void)updateWithQuantity:(NSInteger)quantity;
+- (void)delete;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient12ItemCategory")
 @interface ItemCategory : NSObject
+@property (nonatomic, copy) NSString * _Nonnull id;
+@property (nonatomic, copy) NSString * _Nonnull name;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient12KeyedRequest")
 @interface KeyedRequest : NSObject
+- (nonnull instancetype)initWithCardNumber:(NSString * _Nonnull)cardNumber expDate:(NSString * _Nonnull)expDate cvv:(NSString * _Nonnull)cvv order:(Order * _Nonnull)order OBJC_DESIGNATED_INITIALIZER;
+- (nonnull instancetype)initWithCardNumber:(NSString * _Nonnull)cardNumber expDate:(NSString * _Nonnull)expDate cvv:(NSString * _Nonnull)cvv order:(Order * _Nonnull)order zipCode:(NSString * _Nullable)zipCode streetAddress:(NSString * _Nullable)streetAddress cardPresent:(BOOL)cardPresent;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
+@class OfflineSettings;
 
 SWIFT_CLASS("_TtC14clovergoclient8Merchant")
 @interface Merchant : NSObject
+@property (nonatomic, copy) NSString * _Null_unspecified id;
+@property (nonatomic, copy) NSString * _Nullable name;
+@property (nonatomic, copy) NSString * _Nullable mccCode;
+@property (nonatomic, copy) NSArray<NSString *> * _Nullable features;
+@property (nonatomic, strong) OfflineSettings * _Nullable offlineSettings;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -349,13 +455,48 @@ typedef SWIFT_ENUM(NSInteger, OfflineMode) {
 
 SWIFT_CLASS("_TtC14clovergoclient15OfflineSettings")
 @interface OfflineSettings : NSObject
+@property (nonatomic) BOOL enabled;
+@property (nonatomic) NSInteger maxDaysAllowedOffline;
+@property (nonatomic) NSInteger totalPaymentsLimit;
+@property (nonatomic) NSInteger perPaymentLimit;
+@property (nonatomic) NSInteger promptThreshold;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
+SWIFT_CLASS("_TtC14clovergoclient12OfflineStats")
+@interface OfflineStats : NSObject
+@property (nonatomic) NSInteger noOfDaysOffline;
+@property (nonatomic) NSInteger totalAmount;
+@property (nonatomic) NSInteger totalTransactionCount;
+@property (nonatomic) NSInteger failedTransactionCount;
+@property (nonatomic) NSInteger pendingTransactionCount;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+typedef SWIFT_ENUM(NSInteger, OfflineTransactionState) {
+  OfflineTransactionStateUnknown = 0,
+  OfflineTransactionStateInprogress = 1,
+  OfflineTransactionStatePending = 2,
+  OfflineTransactionStateFailed = 3,
+};
+
+
 SWIFT_CLASS("_TtC14clovergoclient5Order")
 @interface Order : NSObject
+@property (nonatomic, copy) NSString * _Nullable id;
+@property (nonatomic, copy) NSArray<CustomItem *> * _Nonnull customItems;
+@property (nonatomic, copy) NSArray<InventoryItem *> * _Nonnull inventoryItems;
+@property (nonatomic) NSInteger tip;
+@property (nonatomic, copy) NSString * _Nullable externalPaymentId;
+@property (nonatomic) NSInteger customTax;
+@property (nonatomic) enum CLVGoTransactionType transactionType;
+@property (nonatomic, readonly) NSInteger total;
+@property (nonatomic, readonly) NSInteger subTotal;
+@property (nonatomic) NSInteger tax;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+- (void)addCustomItemWithItem:(CustomItem * _Nonnull)item;
+- (void)addInventoryItemWithItem:(InventoryItem * _Nonnull)item;
 @end
 
 
@@ -364,9 +505,18 @@ SWIFT_PROTOCOL("_TtP14clovergoclient14ProceedOnError_")
 - (void)proceedWithValue:(BOOL)value;
 @end
 
+enum CardReaderType : NSInteger;
 
 SWIFT_CLASS("_TtC14clovergoclient10ReaderInfo")
 @interface ReaderInfo : NSObject
+@property (nonatomic) NSInteger batteryPercentage;
+@property (nonatomic, copy) NSString * _Nullable serialNumber;
+@property (nonatomic) BOOL connected;
+@property (nonatomic, readonly) enum CardReaderType readerType;
+@property (nonatomic, copy) NSString * _Nullable bluetoothId;
+@property (nonatomic, copy) NSString * _Nullable bluetoothName;
+@property (nonatomic, copy) NSString * _Nullable readerName;
+- (nonnull instancetype)initWithReaderType:(enum CardReaderType)readerType serialNumber:(NSString * _Nullable)serialNumber OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -375,16 +525,43 @@ typedef SWIFT_ENUM(NSInteger, CardReaderType) {
   CardReaderTypeRP450 = 1,
 };
 
+@class NSDate;
 
 SWIFT_CLASS("_TtC14clovergoclient6Refund")
 @interface Refund : NSObject
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified id;
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified orderId;
+@property (nonatomic, readonly) NSInteger amount;
+@property (nonatomic, readonly) NSInteger tax;
+@property (nonatomic, readonly, strong) NSDate * _Null_unspecified createdTime;
+@property (nonatomic, readonly, strong) NSDate * _Null_unspecified clientCreatedTime;
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified paymentId;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
 SWIFT_CLASS("_TtC14clovergoclient7TaxRate")
 @interface TaxRate : NSObject
+@property (nonatomic, readonly, copy) NSString * _Nonnull id;
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
+@property (nonatomic, readonly) double rate;
+@property (nonatomic, readonly) BOOL isDefault;
+- (nonnull instancetype)initWithId:(NSString * _Nonnull)id name:(NSString * _Nonnull)name rate:(double)rate isDefault:(BOOL)isDefault OBJC_DESIGNATED_INITIALIZER;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
+@end
+
+
+SWIFT_CLASS("_TtC14clovergoclient11Transaction")
+@interface Transaction : NSObject
+@property (nonatomic, readonly) NSInteger amount;
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified orderId;
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified paymentId;
+@property (nonatomic, readonly, copy) NSDate * _Null_unspecified createdTime;
+@property (nonatomic, readonly, copy) NSDate * _Nullable lastPaymentTime;
+@property (nonatomic, readonly, copy) NSString * _Null_unspecified last4;
+@property (nonatomic, readonly) BOOL offline;
+@property (nonatomic, readonly, copy) NSString * _Nullable failureReason;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 @class TransactionResult;
@@ -399,7 +576,7 @@ SWIFT_PROTOCOL("_TtP14clovergoclient19TransactionDelegate_")
 - (void)onAidMatchWithCardApplicationIdentifiers:(NSArray<CardApplicationIdentifier *> * _Nonnull)cardApplicationIdentifiers delegate:(id <AidSelection> _Nonnull)delegate;
 - (void)onProgressWithEvent:(enum TransactionEvent)event;
 @optional
-- (void)addOrderNoteWithDelegate:(id <AddOrderNoteDelegate> _Nonnull)delegate;
+- (void)onReadCardDataResponseWithData:(NSDictionary<NSString *, NSString *> * _Nonnull)data;
 @end
 
 typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
@@ -432,6 +609,25 @@ typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
 
 SWIFT_CLASS("_TtC14clovergoclient17TransactionResult")
 @interface TransactionResult : NSObject
+@property (nonatomic, copy) NSString * _Null_unspecified orderId;
+@property (nonatomic, copy) NSString * _Null_unspecified transactionId;
+@property (nonatomic, copy) NSString * _Nullable status;
+@property (nonatomic) NSInteger amountCharged;
+@property (nonatomic) NSInteger taxAmount;
+@property (nonatomic) NSInteger tipAmount;
+@property (nonatomic, strong) NSDate * _Nullable transactionDate;
+@property (nonatomic, copy) NSString * _Nullable cvmResult;
+@property (nonatomic, copy) NSString * _Nullable cardType;
+@property (nonatomic, copy) NSString * _Nullable mode;
+@property (nonatomic, copy) NSString * _Nullable maskedCardNo;
+@property (nonatomic, copy) NSString * _Nullable transactionType;
+@property (nonatomic, copy) NSString * _Nullable authCode;
+@property (nonatomic, copy) NSString * _Nullable cardHolderName;
+@property (nonatomic, copy) NSString * _Nullable expirationDate;
+@property (nonatomic, copy) NSString * _Nullable token;
+@property (nonatomic, copy) NSString * _Nullable externalPaymentId;
+@property (nonatomic, copy) NSString * _Nullable applicationIdentifier;
+@property (nonatomic) BOOL offline;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
