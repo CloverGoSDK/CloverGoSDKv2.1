@@ -289,6 +289,7 @@ enum Env : NSInteger;
 
 SWIFT_CLASS("_TtC14clovergoclient8CloverGo")
 @interface CloverGo : NSObject
+/// Set allowAutoConnect = true, if you want to connect to the last connected reader automatically
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL allowAutoConnect;)
 + (BOOL)allowAutoConnect SWIFT_WARN_UNUSED_RESULT;
 + (void)setAllowAutoConnect:(BOOL)value;
