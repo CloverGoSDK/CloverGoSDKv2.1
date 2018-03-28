@@ -185,16 +185,14 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Wnullability"
 
 SWIFT_MODULE_NAMESPACE_PUSH("clovergoclient")
-
-SWIFT_PROTOCOL("_TtP14clovergoclient20AddOrderNoteDelegate_")
-@protocol AddOrderNoteDelegate
-- (void)addOrderNote:(NSString * _Nonnull)note;
-@end
-
 @class CardApplicationIdentifier;
 
+/// AidSelection delegate is used to choose the Application Identifier that needs to be used for the current EMV transaction
 SWIFT_PROTOCOL("_TtP14clovergoclient12AidSelection_")
 @protocol AidSelection
+/// This method needs to be called when the cardholder makes a choice on which Application Identifier he want to use for processing the transaction
+/// \param cardApplicationIdentifier An instance of CardApplicationIdentifier which the cardholder chose
+///
 - (void)selectApplicationIdentifierWithCardApplicationIdentifier:(CardApplicationIdentifier * _Nullable)cardApplicationIdentifier;
 @end
 
@@ -209,6 +207,7 @@ typedef SWIFT_ENUM(NSInteger, CLVGoTransactionType) {
 };
 
 
+/// Application Identifier (AID).
 SWIFT_CLASS("_TtC14clovergoclient25CardApplicationIdentifier")
 @interface CardApplicationIdentifier : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull applicationLabel;
@@ -220,42 +219,89 @@ SWIFT_CLASS("_TtC14clovergoclient25CardApplicationIdentifier")
 enum CardReaderErrorEvent : NSInteger;
 enum CardReaderInitializationEvent : NSInteger;
 
+/// Card Reader Delegate that needs to be implemented by the developer to receive reader Initialization events and other important callbacks like onConnected and onDisconnected events
 SWIFT_PROTOCOL("_TtP14clovergoclient18CardReaderDelegate_")
 @protocol CardReaderDelegate
+/// This callback method gets called when a reader is connected
+/// <ul>
+///   <li>
+///     parameters
+///     <ul>
+///       <li>
+///         cardReaderInfo: Returns an instance of ReaderInfo containing the connected readerType, serialNo etc.
+///       </li>
+///     </ul>
+///   </li>
+/// </ul>
 - (void)onConnectedWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
+/// This callback method gets called when a reader gets disconnected
+/// \param cardReaderInfo Returns an instance of ReaderInfo containing the connected readerType, serialNo etc.
+///
 - (void)onDisconnectedWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
+/// This callback method gets called with an error event when the reader cannot be initialized successfully
+/// \param event This is an enum of Card Reader error events that may happen durring card intialization
+///
 - (void)onErrorWithEvent:(enum CardReaderErrorEvent)event;
+/// This callback method get called when the reader is completely initialized and ready to start taking transactions
+/// \param cardReaderInfo Returns an instance of ReaderInfo containing the connected readerType, serialNo etc.
+///
 - (void)onReadyWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
+/// This callback method gets called when the EMV parameters needs to be reset in the reader. All new readers out of the box gets reset when connected for the first time. Developer needs to account for this and show appropriate screens when developing their app
+/// \param event This is an enum of Card Reader Initialization Event that occurs when reader that needs to be reset
+///
 - (void)onReaderResetProgressWithEvent:(enum CardReaderInitializationEvent)event;
+/// This callback method get called when tring to discover RP450X Bluetooth readers
+/// \param readers Returns a list of readers discovered during bluetooth scan
+///
 - (void)onCardReaderDiscoveredWithReaders:(NSArray<ReaderInfo *> * _Nonnull)readers;
 @optional
+/// This callback method get called when an audiojack RP350X reader is plugged in
 - (void)onPlugged;
 @end
 
+/// Card Reader Error Events are sent when there is an error during initializing the reader
 typedef SWIFT_ENUM(NSInteger, CardReaderErrorEvent) {
+/// Intialization of the reader failed. Reader cannot be used to take payments at this point
   CardReaderErrorEventInitialization_failed = 0,
-  CardReaderErrorEventReader_error = 1,
-  CardReaderErrorEventReader_data_not_avaliable = 2,
-  CardReaderErrorEventCard_error = 3,
-  CardReaderErrorEventCard_not_supported = 4,
-  CardReaderErrorEventCard_reader_transaction_aborted = 5,
-  CardReaderErrorEventPairing_error = 6,
-  CardReaderErrorEventFirmware_download_failed = 7,
-  CardReaderErrorEventFirmware_update_failed = 8,
+/// Unable to retrive EMV configuration parameters. Please check your network connectivity
+  CardReaderErrorEventReader_data_not_avaliable = 1,
+/// Unable to download the firmware
+  CardReaderErrorEventFirmware_download_failed = 2,
+/// Failed to update the firmware
+  CardReaderErrorEventFirmware_update_failed = 3,
 };
 
+/// Card Reader initialization events are sent when the reader needs to be loaded with emv terminal parameters and/or firmware update is required
 typedef SWIFT_ENUM(NSInteger, CardReaderInitializationEvent) {
+/// Gets triggered when the Application Identifiers and Public keys are cleared from the reader
   CardReaderInitializationEventClear_aid_pk_complete = 0,
+/// Gets triggered when Application Identifiers are loaded into the reader
   CardReaderInitializationEventAid_flush_complete = 1,
+/// Gets triggered when Public Keys are loaded into the reader
   CardReaderInitializationEventPublic_key_flush_complete = 2,
+/// Gets triggered when the Respone DOL’s, Amount DOL’s and Online DOL’s are flushed into the reader
   CardReaderInitializationEventDol_flush_complete = 3,
+/// Gets triggered when the Initialization of the reader is complete
+/// important:
+///
+/// For RP350X readers, when the reader update is complete, reader will get disconnected automatically. Need to reconnect the reader using ‘useReader’ method in CloverGo
   CardReaderInitializationEventInitialization_complete = 4,
-  CardReaderInitializationEventCalibration_in_progress = 5,
-  CardReaderInitializationEventPairing_complete = 6,
-  CardReaderInitializationEventDownloading_firmware = 7,
-  CardReaderInitializationEventFirware_download_complete = 8,
-  CardReaderInitializationEventUpdating_firmware = 9,
-  CardReaderInitializationEventFirmware_update_complete = 10,
+/// Gets triggered when the Firmware Download Starts
+/// important:
+///
+/// Firmware Update is Applicable only for RP450X readers
+/// Make sure you have good network connectivity and have the reader charged
+  CardReaderInitializationEventDownloading_firmware = 5,
+/// Gets triggered when the Firmware Download is complete
+  CardReaderInitializationEventFirware_download_complete = 6,
+/// Gets triggered when Firmware Update starts
+  CardReaderInitializationEventUpdating_firmware = 7,
+/// Gets triggered when the Firmware update is complete.
+/// important:
+///
+/// Do not close the app till you get the ‘initialization_complete’ event
+/// Once the firmware is updated, Reader will disconnect and when reconnected again the reader needs to be reloaded with Application Identifiers, Public Keys and DOL’s
+  CardReaderInitializationEventFirmware_update_complete = 8,
 };
 
 typedef SWIFT_ENUM(NSInteger, CardType) {
@@ -275,6 +321,7 @@ SWIFT_CLASS("_TtC14clovergoclient11CardUtility")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+@protocol LoggerDelegate;
 enum Env : NSInteger;
 @class Inventory;
 @class CloverGoError;
@@ -287,67 +334,283 @@ enum Env : NSInteger;
 @class Transaction;
 @class OfflineStats;
 
+/// CloverGo provides an interface to communicate with a RP350X or RP450X reader, and to take payments.
 SWIFT_CLASS("_TtC14clovergoclient8CloverGo")
 @interface CloverGo : NSObject
 /// Set allowAutoConnect = true, if you want to connect to the last connected reader automatically
+/// <ul>
+///   <li>
+///     Default:
+///     false
+///   </li>
+/// </ul>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL allowAutoConnect;)
 + (BOOL)allowAutoConnect SWIFT_WARN_UNUSED_RESULT;
 + (void)setAllowAutoConnect:(BOOL)value;
+/// Set overrideDuplicateTransaction = true, if you don’t want to be prompted for duplicate transactions
+/// <ul>
+///   <li>
+///     Default:
+///     false
+///   </li>
+/// </ul>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideDuplicateTransaction;)
 + (BOOL)overrideDuplicateTransaction SWIFT_WARN_UNUSED_RESULT;
 + (void)setOverrideDuplicateTransaction:(BOOL)value;
+/// Set overrideAddressVerification = true, if you don’t want to be prompted for AVS failures
+/// <ul>
+///   <li>
+///     Default:
+///     false
+///   </li>
+/// </ul>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideAddressVerification;)
 + (BOOL)overrideAddressVerification SWIFT_WARN_UNUSED_RESULT;
 + (void)setOverrideAddressVerification:(BOOL)value;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationID;)
-+ (NSString * _Nonnull)remoteApplicationID SWIFT_WARN_UNUSED_RESULT;
-+ (void)setRemoteApplicationID:(NSString * _Nonnull)value;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationVersion;)
-+ (NSString * _Nonnull)remoteApplicationVersion SWIFT_WARN_UNUSED_RESULT;
-+ (void)setRemoteApplicationVersion:(NSString * _Nonnull)value;
+/// Set enableQuickChip = true, if you want to Enable Quick Chip feature.
+/// important:
+///
+/// Not supported in RP350X readers
+/// <ul>
+///   <li>
+///     Defaut:
+///     false
+///   </li>
+/// </ul>
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL enableQuickChip;)
 + (BOOL)enableQuickChip SWIFT_WARN_UNUSED_RESULT;
 + (void)setEnableQuickChip:(BOOL)value;
+///
 + (void)enableLogs:(BOOL)enable;
+/// Enable logs in CloverGo
+/// \param enable true or false
+///
+/// \param loggerDelegate Instance of LoggerDelegate implementation where the logs statements from SDK will be sent to
+///
++ (void)enableLogs:(BOOL)enable loggerDelegate:(id <LoggerDelegate> _Nonnull)loggerDelegate;
+/// Returns a boolean to indicate if  logging has been enabled in the CloverGo
+///
+/// returns:
+/// A Boolean value
 + (BOOL)isLogsEnabled SWIFT_WARN_UNUSED_RESULT;
+/// OfflinePaymentProcessingStarted Notification will be sent when the offline processing has been started
+/// important:
+///
+/// Offline processing will start when the App is in foreground and when there is network connectivity
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingStarted;)
 + (NSNotification * _Nonnull)OfflinePaymentProcessingStarted SWIFT_WARN_UNUSED_RESULT;
+/// OfflinePaymentProcessingCompleted Notification will be sent when the offline processing is complete
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingCompleted;)
 + (NSNotification * _Nonnull)OfflinePaymentProcessingCompleted SWIFT_WARN_UNUSED_RESULT;
+/// OfflinePaymentProcessingSuspended Notification will be sent when the offline processing is suspended
+/// important:
+///
+/// Offline processing will be suspended when the app is put in background
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSNotification * _Nonnull OfflinePaymentProcessingSuspended;)
 + (NSNotification * _Nonnull)OfflinePaymentProcessingSuspended SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
+/// Initializes the CloverGo SDK with Access token, API key, Secret and Environment
+/// \param accessToken Access token needs to be obtained from Clover via OAuth. Please follow the detailed documentation for more information regarding this.
+///
+/// \param apiKey Api key provided by the Clover Go Integration team
+///
+/// \param secret Secret provided by the Clover Go Integration team
+///
+/// \param env SDK Environment
+///
 - (void)initializeWithAccessToken:(NSString * _Nonnull)accessToken apiKey:(NSString * _Nonnull)apiKey secret:(NSString * _Nonnull)secret env:(enum Env)env;
+/// Initializes the CloverGo SDK with API key, Secret and Environment
+/// \param apiKey Api key provided by the Clover Go Integration team
+///
+/// \param secret Secret provided by the Clover Go Integration team
+///
+/// \param env SDK Environment
+///
 - (void)initializeWithApiKey:(NSString * _Nonnull)apiKey secret:(NSString * _Nonnull)secret env:(enum Env)env;
+/// Loads the Inventory details from Clover for the given Merchant context
+/// \param forceReload By defaut, Inventory Items will be returned from the local data store within the SDK. If the data needs to be fetched from the Clover Cloud, then pass the value ‘true’ (this will also refresh the local cache in the SDK)
+///
+/// \param success An Array of Inventory items will be returned in the success completion block
+///
+/// \param failure A CloverGoError will be returned in the failure completion block
+///
 - (void)loadInventoryWithForceReload:(BOOL)forceReload success:(void (^ _Nonnull)(NSArray<Inventory *> * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Loads the Tax Rates from Clover for the given Merchant context
+/// \param forceReload By defaut, Tax Rates Items will be returned from the local data store within the SDK. If the data needs to be fetched from the Clover Cloud, then pass the value ‘true’ (this will also refresh the local cache in the SDK)
+///
+/// \param success An Array of TaxRate will be returned in the success completion block
+///
+/// \param failure A CloverGoError will be returned in the failure completion block
+///
 - (void)loadTaxesWithForceReload:(BOOL)forceReload success:(void (^ _Nonnull)(NSArray<TaxRate *> * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Sends the Order Receipt to Email and/or phone number
+/// \param orderId Order Id, This will be part of a successful transaction response
+///
+/// \param email Email to which the receipt url will be sent
+///
+/// \param phone Phone No to which the receipt url will be sent via SMS
+///
 - (void)sendReceiptWithOrderId:(NSString * _Nonnull)orderId email:(NSString * _Nullable)email phone:(NSString * _Nullable)phone;
-- (void)captureSignatureWithTipWithTransactionId:(NSString * _Nonnull)transactionId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy tip:(NSInteger)tip;
-- (void)captureSignatureWithTransactionId:(NSString * _Nonnull)transactionId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy;
+/// Capture the Signature along with Tip. This method should be used when the Gateway Tip Adjust is turned on.
+/// \param paymentId Payment Id which is returned as part of successful transaction response
+///
+/// \param xy An Array of coordinates marking different points of Signature. Refer sample app for reference implementation
+///
+/// \param tip Tip amount in Cents that needs to be added to the transaction
+///
+- (void)captureSignatureWithTipWithPaymentId:(NSString * _Nonnull)paymentId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy tip:(NSInteger)tip;
+/// Captures the Signature for a processed transaction
+/// \param paymentId Payment Id which is returned as part of successful transaction response
+///
+/// \param xy An Array of coordinates marking different points of Signature. Refer sample app for reference implementation
+///
+- (void)captureSignatureWithPaymentId:(NSString * _Nonnull)paymentId xy:(NSArray<NSArray<NSArray<NSNumber *> *> *> * _Nonnull)xy;
+/// Starts processing a Manually Keyed transaction
+/// \param keyedRequest KeyedRequest (Refer KeyedRequest documention for more information)
+///
+/// \param delegate Instance of a TransactionDelegate implementation (Refer TransactionDelegate documentation for more information)
+///
 - (void)doKeyedTransactionWithKeyedRequest:(KeyedRequest * _Nonnull)keyedRequest delegate:(id <TransactionDelegate> _Nonnull)delegate;
+/// Starts processing a Card Reader transaction
+/// \param readerInfo Pass the instance of ReaderInfo on which the transaction needs to be started
+///
+/// \param order An Order object containing the Inventory/Custom Items
+///
+/// \param delegate Instance of a TransactionDelegate implementation (Refer TransactionDelegate documentation for more information)
+///
 - (void)doCardReaderTransactionWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo order:(Order * _Nonnull)order delegate:(id <TransactionDelegate> _Nonnull)delegate;
+/// Reads the Cards EMV/Swipe parameters
+/// \param readerInfo Pass the instance of ReaderInfo on which the transaction needs to be started
+///
+/// \param delegate Instance of a TransactionDelegate implementation (Refer TransactionDelegate documentation for more information)
+///
 - (void)doReadCardDataWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo delegate:(id <TransactionDelegate> _Nonnull)delegate;
+/// Cancel a card reader transaction that is in progress
+/// \param readerInfo Pass the instance of ReaderInfo on which the transaction needs to be started
+///
 - (void)cancelCardReaderTransactionWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+/// Initiates and establishes a connection to a CloverGo reader via audiojack or bluetooth depending on the reader type provided in the ReaderInfo object
+/// important:
+///
+/// For RP450X reader type, this method starts a bluetooth scan for approximately 15 seconds. Scan stops as soon as a RP450X reader is found
+/// \param cardReaderInfo An instance of ReaderInfo to which the connection needs to be established
+///
+/// \param delegate Instance of a CardReaderDelegate implementation (Refer CardReaderDelegate documentation for more information)
+///
 - (void)useReaderWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo delegate:(id <CardReaderDelegate> _Nonnull)delegate;
-- (void)scanForBluetoothReaders;
+/// Checks the connectivity for the given ReaderType
+/// \param cardReaderInfo An instance of ReaderInfo to check if its connected or not
+///
+///
+/// returns:
+///
+/// A Boolean to indicate if a reader is connected or not based on the ReaderType provided in the ReaderInfo object
 - (BOOL)isConnectedWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo SWIFT_WARN_UNUSED_RESULT;
+/// Disconnects a Reader
+/// \param cardReaderInfo An instance of ReaderInfo that needs to be disconnected
+///
 - (void)releaseReaderWithCardReaderInfo:(ReaderInfo * _Nonnull)cardReaderInfo;
+/// Connects/Pairs a Bluetooth reader
+/// \param readerInfo The instance of ReaderInfo object that is returned during reader discovery
+///
 - (void)connectToBTReaderWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+/// Resets the readers terminal confiuration
+/// important:
+///
+/// Use this when the reader is not able to read card emv parameters
+/// \param readerInfo An instance of ReaderInfo that needs to be reset
+///
 - (void)resetReaderWithReaderInfo:(ReaderInfo * _Nonnull)readerInfo;
+/// Capture a Pre-Auth transaction
+/// \param paymentId Payment Id or Transaction Id associated with the Pre-Auth transaction
+///
+/// \param amount Total amount that needs to be captured for this transaction in Cents
+///
+/// \param tipAmount Tip amount in Cents
+///
+/// \param success Returns boolean on successfully capture
+///
+/// \param failure Returns CloverGoError via failure completion block
+///
 - (void)doCapturePreAuthTransactionWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount tipAmount:(NSInteger)tipAmount success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Close Out call initiates a batch process
+/// \param success Returns boolean on successfully initiating the Close Out batch
+///
+/// \param failure Returns CloverGoError via failure completion block
+///
 - (void)doCloseOutTransactionWithSuccess:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Refund a Payment Transaction
+/// important:
+///
+/// This method refunds the entire payment amount. If you need to do a partial refund, use the method ‘doRefundTransactionWithAmount’
+/// \param paymentId PaymentId or TransactionId that needs to be Voided
+///
+/// \param success Returns Refund object on successfully adding a tip to a payment via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block if the refund fails
+///
 - (void)doRefundTransactionWithPaymentId:(NSString * _Nonnull)paymentId success:(void (^ _Nonnull)(Refund * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Refund a Payment Transaction
+/// \param paymentId PaymentId or TransactionId that needs to be Voided
+///
+/// \param amount Amount in Cents that needs to be refunded
+///
+/// \param success Returns Refund object on successfully adding a tip to a payment via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block if the refund fails
+///
 - (void)doRefundTransactionWithAmountWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount success:(void (^ _Nonnull)(Refund * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Adding a Tip to a Payment Transaction
+/// important:
+///
+/// Only the first tip is recorded, calling this method to add multiple tip doesnt have any impact even if it returns a success response
+/// \param paymentId Payment Id that needs to be Voided
+///
+/// \param amount Tip amount in Cents
+///
+/// \param success Returns boolean on successfully adding a tip to a payment via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block
+///
 - (void)doAddTipTransactionWithPaymentId:(NSString * _Nonnull)paymentId amount:(NSInteger)amount success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Delete an existing Order
+/// \param paymentId PaymentId or TransactionId that needs to be Voided
+///
+/// \param orderId Order Id
+///
+/// \param voidReason Reason to Void this payment (optional)
+///
+/// \param success Returns boolean on successful Void of a payment via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block if void fails
+///
 - (void)doVoidTransactionWithPaymentId:(NSString * _Nonnull)paymentId orderId:(NSString * _Nonnull)orderId voidReason:(NSString * _Nullable)voidReason success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Delete an existing Order
+/// \param success Returns boolean on successful deletion of order via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block if deleting an order fails
+///
 - (void)deleteOrderWithOrderId:(NSString * _Nonnull)orderId success:(void (^ _Nonnull)(BOOL))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Get Merchant Information for the given Merchant context
+/// \param success Returns Merchant via success completion block
+///
+/// \param failure Returns CloverGoError via failure completion block
+///
 - (void)getMerchantInfoWithSuccess:(void (^ _Nonnull)(Merchant * _Nonnull))success failure:(void (^ _Nonnull)(CloverGoError * _Nonnull))failure;
+/// Get offline Transaction History
+/// \param success An array of Transaction is returned via success completion block
+///
 - (void)getOfflineTransactionHistoryWithSuccess:(void (^ _Nonnull)(NSArray<Transaction *> * _Nullable))success;
+/// Get the Offline Stats
+/// \param success Returns OfflineStats via success completion block
+///
 - (void)getOfflineStatsWithSuccess:(void (^ _Nonnull)(OfflineStats * _Nonnull))success;
+/// Rerun Failed Offline Transactions
 - (void)reRunFailedOfflineTransactions;
 @end
 
 
+/// CloverGo Error
 SWIFT_CLASS("_TtC14clovergoclient13CloverGoError")
 @interface CloverGoError : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull code;
@@ -378,11 +641,11 @@ typedef SWIFT_ENUM(NSInteger, Env) {
   EnvDemo = 1,
   EnvSandbox = 2,
   EnvTest = 3,
-  EnvQa = 4,
 };
 
 @class ItemCategory;
 
+/// Inventory Item
 SWIFT_CLASS("_TtC14clovergoclient9Inventory")
 @interface Inventory : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull id;
@@ -447,12 +710,6 @@ typedef SWIFT_ENUM(NSInteger, MerchantPropertyType) {
   MerchantPropertyTypeSupportsTipAdjust = 6,
 };
 
-typedef SWIFT_ENUM(NSInteger, OfflineMode) {
-  OfflineModeAlways = 0,
-  OfflineModeNever = 1,
-  OfflineModeOn_demand = 2,
-};
-
 
 SWIFT_CLASS("_TtC14clovergoclient15OfflineSettings")
 @interface OfflineSettings : NSObject
@@ -501,8 +758,20 @@ SWIFT_CLASS("_TtC14clovergoclient5Order")
 @end
 
 
+/// ProceedOnError delegate is used to continue or cancel a transaction when specific error conditions arise
 SWIFT_PROTOCOL("_TtP14clovergoclient14ProceedOnError_")
 @protocol ProceedOnError
+/// This method needs to be called when the merchant wants to proceed or cancel a transaction
+/// \param value A Boolean value
+/// <ul>
+///   <li>
+///     true to continue with transaction
+///   </li>
+///   <li>
+///     false to cancel the transaction
+///   </li>
+/// </ul>
+///
 - (void)proceedWithValue:(BOOL)value;
 @end
 
@@ -569,41 +838,88 @@ SWIFT_CLASS("_TtC14clovergoclient11Transaction")
 enum TransactionErrorEvent : NSInteger;
 enum TransactionEvent : NSInteger;
 
+/// Transaction Delegate that needs to be implemented by the developer to receive transaction events, success or failure responses.
+/// important:
+///
+/// Ideally the implementation of this delegate needs to be a singleton
 SWIFT_PROTOCOL("_TtP14clovergoclient19TransactionDelegate_")
 @protocol TransactionDelegate
+/// Success response is returned via this callback method. TransactionResult contains the Order Id, Payment Id which is required to do the secondary transactions
+/// \param transactionResponse An instance of TransactionResult is returned
+///
 - (void)onTransactionResponseWithTransactionResponse:(TransactionResult * _Nonnull)transactionResponse;
+/// When a transaction fails error response is returned via this callback method.
 - (void)onErrorWithError:(CloverGoError * _Nonnull)error;
+/// This delegate method is called when a transaction error happens which can be continued with the authorization of the merchant.
+/// \param event This is a enum with possible transaction error events
+///
+/// \param proceedOnErrorDelegate This is a delegate implementation which the merchant/developer needs to call to proceed with the transaction or cancel (void) the transaction
+///
 - (void)proceedOnErrorWithEvent:(enum TransactionErrorEvent)event proceedOnErrorDelegate:(id <ProceedOnError> _Nonnull)proceedOnErrorDelegate;
+/// If a card supports multipe application identifiers, this list will be sent via this delegate.
+/// \param cardApplicationIdentifiers A list of Application Identifiers(AID) supported by the card
+///
+/// \param delegate This is a delegate implementation of AidSelection. Based on the user selection, the selected AID needs to be sent via this delegate.
+///
 - (void)onAidMatchWithCardApplicationIdentifiers:(NSArray<CardApplicationIdentifier *> * _Nonnull)cardApplicationIdentifiers delegate:(id <AidSelection> _Nonnull)delegate;
+/// Transaction Progress Events are sent via this delegate
+/// \param event This is a enum of Transaction events
+///
 - (void)onProgressWithEvent:(enum TransactionEvent)event;
 @optional
+/// This is an optional delegate method that need not be implemented for regular transaction processing. This only needs to be implemented if you are interested in getting the Card EMV Data and you need to call doReadCardData in CloverGo
+/// \param data This is map of different emv parameters
+///
 - (void)onReadCardDataResponseWithData:(NSDictionary<NSString *, NSString *> * _Nonnull)data;
 @end
 
+/// Transaction Error Events get triggered when merchant has the oppurtunity to proceed or cancel with the transaction
 typedef SWIFT_ENUM(NSInteger, TransactionErrorEvent) {
+/// Gets triggered Address Verfication failed for Manual Keyed transactions
   TransactionErrorEventAvs_failure = 0,
+/// Gets triggered when the same card is used for same amount within a short interval of time
   TransactionErrorEventDuplicate_transaction = 1,
+/// Get triggered when the device is offline or slow network
   TransactionErrorEventOffline = 2,
+/// Gets triggered when the order amount exceeds the threshold limit set by the merchant
   TransactionErrorEventOffline_threshold_limit_exceeded = 3,
+/// Gets triggered when the transaction is partially authorized
   TransactionErrorEventPartial_auth = 4,
-  TransactionErrorEventCvv_failure = 5,
+/// Gets triggered when CVV verfication failed
+  TransactionErrorEventCvv_mismatch = 5,
 };
 
+/// Transaction Events are sent from the time a transaction is initiated till a success or failure response is returned
 typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
+/// Gets triggered when Card if Swiped
   TransactionEventCard_swiped = 0,
+/// Gets triggered when a Contactless card is tapped (includes Apple pay, Android Pay, etc.)
   TransactionEventCard_tapped = 1,
+/// Gets triggered when a card is not swiped properly. User is allowed to retry swiping the same card
   TransactionEventSwipe_failed = 2,
+/// Gets triggered when a chip card is swiped. User needs to insert the Chip card instead of swiping
   TransactionEventEmv_card_swiped_error = 3,
+/// Gets triggered when a chip card cannot be read. At this time user can Swipe the chip card
   TransactionEventEmv_dip_failed_3_attempts = 4,
+/// Gets triggered when Chip card is not inserted properly. User is allowed to retry inserting the same chip card
   TransactionEventEmv_card_dip_failed = 5,
+/// Gets triggered when a chip card is inserted
   TransactionEventEmv_card_inserted = 6,
+/// Gets triggered when a chip card is removed from the reader
   TransactionEventEmv_card_removed = 7,
+/// Gets triggered when the reader cannot read emv parameters from a contactless card. User can retry the action.
   TransactionEventContactless_failed_try_again = 8,
+/// Gets triggered when the reader cannot read the emv parameters. User needs to try inserting the chip card.
   TransactionEventContactless_failed_try_contact = 9,
+/// Get triggered for contactless transaction like Apple Pay/Android Pay. Cardholder needs to look at their phone for further action
   TransactionEventPlease_see_phone = 10,
+/// Gets triggered when the reader detects multiple contactless cards within the NFC range
   TransactionEventMultiple_contactless_cards_detected = 11,
+/// Gets triggered when Card Reader transaction is initiated
   TransactionEventSwipe_dip_tap_card = 12,
+/// Gets triggered when the Chip Card needs to be removed from the reader
   TransactionEventRemove_card = 13,
+/// Gets triggered when the transaction is processing
   TransactionEventProcessing_transaction = 14,
 };
 
@@ -611,7 +927,7 @@ typedef SWIFT_ENUM(NSInteger, TransactionEvent) {
 SWIFT_CLASS("_TtC14clovergoclient17TransactionResult")
 @interface TransactionResult : NSObject
 @property (nonatomic, copy) NSString * _Null_unspecified orderId;
-@property (nonatomic, copy) NSString * _Null_unspecified transactionId;
+@property (nonatomic, copy) NSString * _Null_unspecified paymentId;
 @property (nonatomic, copy) NSString * _Nullable status;
 @property (nonatomic) NSInteger amountCharged;
 @property (nonatomic) NSInteger taxAmount;

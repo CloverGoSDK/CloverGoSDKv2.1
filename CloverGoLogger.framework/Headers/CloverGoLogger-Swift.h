@@ -183,6 +183,7 @@ typedef unsigned int swift_uint4  __attribute__((__ext_vector_type__(4)));
 #pragma clang diagnostic ignored "-Wnullability"
 
 SWIFT_MODULE_NAMESPACE_PUSH("CloverGoLogger")
+/// Enum for different log levels used in CloverGo
 typedef SWIFT_ENUM(NSInteger, LogLevel) {
   LogLevelERROR = 0,
   LogLevelWARN = 1,
@@ -191,6 +192,7 @@ typedef SWIFT_ENUM(NSInteger, LogLevel) {
 };
 
 
+/// Implement this logger to get CloverGo SDK log messages
 SWIFT_PROTOCOL("_TtP14CloverGoLogger14LoggerDelegate_")
 @protocol LoggerDelegate
 - (void)logWithMessage:(NSString * _Nonnull)message level:(enum LogLevel)level;
