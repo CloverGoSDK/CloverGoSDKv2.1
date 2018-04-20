@@ -269,6 +269,8 @@ typedef SWIFT_ENUM(NSInteger, CardReaderErrorEvent) {
   CardReaderErrorEventFirmware_download_failed = 2,
 /// Failed to update the firmware
   CardReaderErrorEventFirmware_update_failed = 3,
+/// Firmware update not supported for the connected reader type
+  CardReaderErrorEventFirmware_update_not_supported = 4,
 };
 
 /// Card Reader initialization events are sent when the reader needs to be loaded with emv terminal parameters and/or firmware update is required
