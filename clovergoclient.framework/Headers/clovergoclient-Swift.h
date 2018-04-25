@@ -751,6 +751,7 @@ SWIFT_CLASS("_TtC14clovergoclient5Order")
 @property (nonatomic, copy) NSString * _Nullable externalPaymentId;
 @property (nonatomic) NSInteger customTax;
 @property (nonatomic) enum CLVGoTransactionType transactionType;
+@property (nonatomic, copy) NSString * _Nullable note;
 @property (nonatomic, readonly) NSInteger total;
 @property (nonatomic, readonly) NSInteger subTotal;
 @property (nonatomic) NSInteger tax;
