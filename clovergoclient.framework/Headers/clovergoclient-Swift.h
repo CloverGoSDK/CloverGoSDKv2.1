@@ -367,6 +367,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideDuplicateTransact
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class) BOOL overrideAddressVerification;)
 + (BOOL)overrideAddressVerification SWIFT_WARN_UNUSED_RESULT;
 + (void)setOverrideAddressVerification:(BOOL)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationID;)
++ (NSString * _Nonnull)remoteApplicationID SWIFT_WARN_UNUSED_RESULT;
++ (void)setRemoteApplicationID:(NSString * _Nonnull)value;
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nonnull remoteApplicationVersion;)
++ (NSString * _Nonnull)remoteApplicationVersion SWIFT_WARN_UNUSED_RESULT;
++ (void)setRemoteApplicationVersion:(NSString * _Nonnull)value;
 /// Set enableQuickChip = true, if you want to Enable Quick Chip feature.
 /// important:
 ///
@@ -757,6 +763,7 @@ SWIFT_CLASS("_TtC14clovergoclient5Order")
 @property (nonatomic) NSInteger customTax;
 @property (nonatomic) enum CLVGoTransactionType transactionType;
 @property (nonatomic, copy) NSString * _Nullable note;
+@property (nonatomic) BOOL quickMode;
 @property (nonatomic, readonly) NSInteger total;
 @property (nonatomic, readonly) NSInteger subTotal;
 @property (nonatomic) NSInteger tax;
