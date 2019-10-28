@@ -679,7 +679,6 @@ SWIFT_CLASS("_TtC14clovergoclient9Inventory")
 @interface Inventory : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull id;
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
-@property (nonatomic, copy) NSString * _Nullable alternateName;
 @property (nonatomic, readonly) NSInteger price;
 @property (nonatomic, readonly, copy) NSString * _Nullable priceType;
 @property (nonatomic) NSInteger stockCount;
@@ -1671,7 +1670,6 @@ SWIFT_CLASS("_TtC14clovergoclient9Inventory")
 @interface Inventory : NSObject
 @property (nonatomic, readonly, copy) NSString * _Nonnull id;
 @property (nonatomic, readonly, copy) NSString * _Nonnull name;
-@property (nonatomic, copy) NSString * _Nullable alternateName;
 @property (nonatomic, readonly) NSInteger price;
 @property (nonatomic, readonly, copy) NSString * _Nullable priceType;
 @property (nonatomic) NSInteger stockCount;
