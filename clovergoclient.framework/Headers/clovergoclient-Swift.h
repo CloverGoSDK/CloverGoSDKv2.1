@@ -1994,3 +1994,4 @@ SWIFT_CLASS("_TtC14clovergoclient17TransactionResult")
 #pragma clang diagnostic pop
 #endif
 #endif
+

@@ -502,3 +502,4 @@ SWIFT_CLASS("_TtC17CloverGoReaderSDK23RP450TransactionManager")
 #pragma clang diagnostic pop
 #endif
 #endif
+

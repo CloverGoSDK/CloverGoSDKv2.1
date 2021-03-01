@@ -454,3 +454,4 @@ SWIFT_PROTOCOL("_TtP14CloverGoLogger14LoggerDelegate_")
 #pragma clang diagnostic pop
 #endif
 #endif
+
