@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/CloverGoReaderSDK-Swift.h</key>
 		<data>
-		WE6E1edYjGhlyheHJuL2rYwXg0Y=
+		Jk8+a6touH8rfF0oJE4f+MgSR/A=
 		</data>
 		<key>Headers/CloverGoReaderSDK.h</key>
 		<data>
@@ -18,31 +18,31 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		TU5Yo9kzjvX2DK6pi5hoalrfCUw=
+		/WU4Ed4qNxTbf5m8AouY0ZNm0MQ=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		dLSsX8yjjbiYnCSaySwNjYV3e0Q=
+		s2nz+eKjtYnReGy0x0ijiyvNwRg=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<data>
-		dLSsX8yjjbiYnCSaySwNjYV3e0Q=
+		s2nz+eKjtYnReGy0x0ijiyvNwRg=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
-		S1828iR2AANN08d2BEGzuIHpOzY=
+		2snj0kn2nEI7nv6ktWdJu4RdgTg=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		HaANnRdDKn2vMtIscWgOVRzPw2s=
+		loI7x0zdClyBFHDGVJztsMJRsZg=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64.swiftdoc</key>
 		<data>
-		S1828iR2AANN08d2BEGzuIHpOzY=
+		2snj0kn2nEI7nv6ktWdJu4RdgTg=
 		</data>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		HaANnRdDKn2vMtIscWgOVRzPw2s=
+		loI7x0zdClyBFHDGVJztsMJRsZg=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -70,11 +70,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			WE6E1edYjGhlyheHJuL2rYwXg0Y=
+			Jk8+a6touH8rfF0oJE4f+MgSR/A=
 			</data>
 			<key>hash2</key>
 			<data>
-			iWwn8yUCLaRyTQ9geUpCK4or7dRxb1gkYLo36mrJk2Q=
+			ohA8FafadIUibBevwrMZCdWGyOiXwUUJTXs31M9ZNDM=
 			</data>
 		</dict>
 		<key>Headers/CloverGoReaderSDK.h</key>
@@ -92,66 +92,66 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dLSsX8yjjbiYnCSaySwNjYV3e0Q=
+			s2nz+eKjtYnReGy0x0ijiyvNwRg=
 			</data>
 			<key>hash2</key>
 			<data>
-			wNxhBhSq7U4CiwvgTy819BIPxFcmbWTGEAQ9M7Y4X4o=
+			9M7hS0QMfQ4lmk0WtyV7igkqpYYvuguDWDbd2eKID7M=
 			</data>
 		</dict>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dLSsX8yjjbiYnCSaySwNjYV3e0Q=
+			s2nz+eKjtYnReGy0x0ijiyvNwRg=
 			</data>
 			<key>hash2</key>
 			<data>
-			wNxhBhSq7U4CiwvgTy819BIPxFcmbWTGEAQ9M7Y4X4o=
+			9M7hS0QMfQ4lmk0WtyV7igkqpYYvuguDWDbd2eKID7M=
 			</data>
 		</dict>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			S1828iR2AANN08d2BEGzuIHpOzY=
+			2snj0kn2nEI7nv6ktWdJu4RdgTg=
 			</data>
 			<key>hash2</key>
 			<data>
-			ahtsCEFyLDoYQkER2huD3x2H6rSrV12IiMKhdfA380s=
+			yZrqhthhYz8FM+0TyAbsoXvRnhBvKk0TJdZVQ4Jd9XA=
 			</data>
 		</dict>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			HaANnRdDKn2vMtIscWgOVRzPw2s=
+			loI7x0zdClyBFHDGVJztsMJRsZg=
 			</data>
 			<key>hash2</key>
 			<data>
-			1gNfpJFO7AXKb8QJVJMCuN0v9v4zLctrKXfjCtb+aaA=
+			dUuzG/EJRP1akgy5ee6U3Y2fpJ+cqIWkGUM+C7BSRbw=
 			</data>
 		</dict>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64.swiftdoc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			S1828iR2AANN08d2BEGzuIHpOzY=
+			2snj0kn2nEI7nv6ktWdJu4RdgTg=
 			</data>
 			<key>hash2</key>
 			<data>
-			ahtsCEFyLDoYQkER2huD3x2H6rSrV12IiMKhdfA380s=
+			yZrqhthhYz8FM+0TyAbsoXvRnhBvKk0TJdZVQ4Jd9XA=
 			</data>
 		</dict>
 		<key>Modules/CloverGoReaderSDK.swiftmodule/arm64.swiftmodule</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			HaANnRdDKn2vMtIscWgOVRzPw2s=
+			loI7x0zdClyBFHDGVJztsMJRsZg=
 			</data>
 			<key>hash2</key>
 			<data>
-			1gNfpJFO7AXKb8QJVJMCuN0v9v4zLctrKXfjCtb+aaA=
+			dUuzG/EJRP1akgy5ee6U3Y2fpJ+cqIWkGUM+C7BSRbw=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
