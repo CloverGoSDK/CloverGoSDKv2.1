@@ -1,0 +1,332 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.5.1 (swiftlang-1300.0.31.4 clang-1300.0.29.6)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name CloverGoReaderSDK
+import CloverGoLogger
+@_exported import CloverGoReaderSDK
+import CoreBluetooth
+import Foundation
+import RUA
+import Swift
+import _Concurrency
+public enum DeviceType : Swift.String {
+  case RP350X, RP450X
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ReaderEventType {
+  case CLEAR_AID_PK_COMPLETE, AID_FLUSH_COMPLETE, PUBLIC_KEY_FLUSH_COMPLETE, CONTACT_DOL_FLUSH_COMPLETE, CONTACTLESS_DOL_FLUSH_COMPLETE, INITIALIZATION_COMPLETE, CALIBRATION_COMPLETE, CALIBRATION_IN_PROGRESS, PARING_COMPLETE, BATTERY_LOW, UPDATING_FIRMWARE, UPDATE_FIRMWARE_COMPLETE
+  public static func == (a: CloverGoReaderSDK.ReaderEventType, b: CloverGoReaderSDK.ReaderEventType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum TransactionEventType {
+  case CARD_SWIPED, CARD_TAPPED, SWIPE_FAILED, EMV_CARD_SWIPED_ERROR, EMV_DIP_FAILED_3_ATTEMPTS, EMV_CARD_DIP_FAILED, EMV_CARD_INSERTED, MULTIPLE_CONTACTLESS_CARD_DETECTED, CONTACTLESS_FAILED_TRY_CONTACT, EMV_CARD_REMOVED, CUSTOMER_VALIDATION, SWIPE_DIP_CARD, UNABLE_TO_READ_CARD, CARD_TYPE_ERROR, REMOVE_CARD
+  public static func == (a: CloverGoReaderSDK.TransactionEventType, b: CloverGoReaderSDK.TransactionEventType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ErrorEventType {
+  case OTHER_ERROR, READER_ERROR, CARD_ERROR, CALIBRATION_FAILED, PAIRING_ERROR, FIRMWARE_UPDATE_ERROR, BATTERY_LOW, CARD_NOT_ACCEPTED, UNKOWN_READER_ERROR, CARD_BLOCKED, CONTACTLESS_FAILED, ENABLE_FIRMWARE_UPDATE_FAILED, TIMED_OUT, P2P_ENCRYPT_ERROR, CARD_READER_BUSY
+  public static func == (a: CloverGoReaderSDK.ErrorEventType, b: CloverGoReaderSDK.ErrorEventType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum ErrorEventActionType {
+  case NONE, START, STOP_START
+  public static func == (a: CloverGoReaderSDK.ErrorEventActionType, b: CloverGoReaderSDK.ErrorEventActionType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum OfflineProperties {
+  case TERMINAL_FLOOR_LIMIT, TERMINAL_ACTION_CODE_ONLINE
+  public static func == (a: CloverGoReaderSDK.OfflineProperties, b: CloverGoReaderSDK.OfflineProperties) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum CardDataParameter : Swift.String {
+  case ksn
+  case pan
+  case amountAuthorizedNumeric
+  case amountOtherNumeric
+  case applicationCryptogram
+  case applicationEffectiveDate
+  case applicationExpirationDate
+  case applicationIdentifier
+  case applicationInterchangeProfile
+  case applicationLabel
+  case applicationPreferredName
+  case applicationTransactionCounter
+  case cardHolderName
+  case cvmResult
+  case cryptogramInformationData
+  case dedicatedFileName
+  case encryptedTrack
+  case interfaceDeviceSerialNumber
+  case issuerApplicationData
+  case panSequenceNumber
+  case responseType
+  case transactionStatusInformation
+  case transactionCurrencyCode
+  case transactionDate
+  case transactionType
+  case transactionSequenceCounter
+  case terminalCapabilities
+  case terminalCountryCode
+  case terminalType
+  case terminalVerificationResults
+  case track2EquivalentData
+  case unpredictableNumber
+  case issuerCountryCode
+  case terminalDecisionAfterGenac
+  case track1Data
+  case track2Data
+  case cardType
+  case applicationFileLocator
+  case formFactorIndicator
+  case cardTransactionQualifiers
+  case contactlessInformationOut
+  case amexExpresspayPseudoTrack1
+  case amexExpresspayPseudoTrack2
+  case payPassThirdPartyData
+  case emvtlvData
+  case responseCode
+  case cardPresent
+  case cvv
+  case expDate
+  case streetAddress
+  case zipCode
+  case readerConnected
+  case posEntryMode
+  case contactlessEMV
+  public func toString() -> Swift.String
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers open class CardReader : ObjectiveC.NSObject {
+  public static let sharedInstance: CloverGoReaderSDK.CardReader
+  open func initReader(_ deviceType: CloverGoReaderSDK.DeviceType, readerCallBack: CloverGoReaderSDK.ReaderCallBack?, cardReaderTransactionCallBack: CloverGoReaderSDK.CardReaderTransactionCallBack?)
+  open func releaseReader(_ deviceType: CloverGoReaderSDK.DeviceType)
+  open func getAudioJackConfigurationManager(_ deviceType: CloverGoReaderSDK.DeviceType) -> CloverGoReaderSDK.AudioJackConfigurationManager?
+  open func getBluetoothConfigurationManager(_ deviceType: CloverGoReaderSDK.DeviceType) -> CloverGoReaderSDK.BluetoothConfigurationManager?
+  open func getAudioJackTransactionManager(_ deviceType: CloverGoReaderSDK.DeviceType) -> CloverGoReaderSDK.RP350TransactionManager?
+  open func getBluetoothTransactionManager(_ deviceType: CloverGoReaderSDK.DeviceType) -> CloverGoReaderSDK.RP450TransactionManager?
+  open func getConnectedReaders() -> Swift.Dictionary<Swift.String, CloverGoReaderSDK.CardReaderInfo>
+  open func isReaderConnected(_ deviceType: CloverGoReaderSDK.DeviceType) -> Swift.Bool
+  @objc override dynamic public init()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers open class RP350TransactionManager : ObjectiveC.NSObject {
+  open func writeEMVDataToCard(_ data: Foundation.NSDictionary)
+  open func setExpectedDOLs(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  open func startTransaction(_ amountInCents: Swift.Int, offline: Swift.Bool = false, offlineProperties: [CloverGoReaderSDK.OfflineProperties : Swift.String] = [:])
+  public func stopStartTransaction(amountInCents: Swift.Int)
+  open func endTransaction()
+  open func endTransaction(_ data: Foundation.NSDictionary)
+  open func abortTransaction()
+  open func selectAppIdentifier(_ applicationIdentifier: CloverGoReaderSDK.ApplicationIdentifier, performAidSelection: Swift.Bool)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class RP450TransactionManager : CloverGoReaderSDK.RP350TransactionManager {
+  open func waitForCardRemoval()
+  override open func setExpectedDOLs(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  override open func startTransaction(_ amountInCents: Swift.Int, offline: Swift.Bool = false, offlineProperties: [CloverGoReaderSDK.OfflineProperties : Swift.String] = [:])
+  @objc deinit
+}
+public struct CardReaderTransactionEvent {
+  public var transactionEventType: CloverGoReaderSDK.TransactionEventType! {
+    get
+  }
+  public var data: Swift.String! {
+    get
+  }
+  public var canCancel: Swift.Bool {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers open class AudioJackConfigurationManager : ObjectiveC.NSObject, RUA.RUADeviceStatusHandler {
+  open func loadParamsToReader(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  open func setReaderParams(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  @objc open func onConnected()
+  @objc open func onDisconnected()
+  @objc open func onPlugged()
+  @objc open func onError(_ message: Swift.String)
+  open func startAudiojackReader()
+  open func updateFirmware(firmwareId: Swift.String)
+  open func updateContactlessAID(offline: Swift.Bool, offlineProperties: [CloverGoReaderSDK.OfflineProperties : Swift.String] = [:], success: @escaping (Swift.Bool) -> Swift.Void)
+  @objc deinit
+}
+open class ApplicationIdentifier {
+  open var applicationLabel: Swift.String {
+    get
+  }
+  open var applicationIdentifier: Swift.String {
+    get
+  }
+  open var priorityIndex: Swift.String {
+    get
+  }
+  public init(applicationIdentifier: Swift.String, applicationLabel: Swift.String, priorityIndex: Swift.String)
+  @objc deinit
+}
+open class ReaderCoreData {
+  open var aidObjects: Foundation.NSArray!
+  open var publicKeys: Foundation.NSArray!
+  open var amountDOL: Foundation.NSArray!
+  open var onlineDOL: Foundation.NSArray!
+  open var responseDOL: Foundation.NSArray!
+  open var contactlessOnlineDOL: Foundation.NSArray!
+  open var contactlessResponseDOL: Foundation.NSArray!
+  open var contactlessAidObjects: Foundation.NSArray!
+  open var rawCommands: Foundation.NSArray!
+  public init()
+  open class AIDObject {
+    open var rid: Swift.String!
+    open var applicationVersion: Swift.String!
+    open var iccApplicationVersion: Swift.String!
+    open var priorityIndex: Swift.String!
+    open var applicationSelectionFlag: Swift.String!
+    open var isCommonAID: Swift.Bool!
+    open var name: Swift.String!
+    open var pix: Swift.String!
+    open var isNew: Swift.Bool!
+    open var cvmLimit: Swift.String?
+    open var floorLimit: Swift.String!
+    open var tlvData: Swift.String?
+    open var termCaps: Swift.String?
+    open var txnLimit: Swift.String?
+    public init()
+    @objc deinit
+  }
+  open class PublicKeyObject {
+    open var rid: Swift.String!
+    open var caPubKeyIndex: Swift.String!
+    open var key: Swift.String!
+    open var expOfPubKey: Swift.String!
+    open var checkSum: Swift.String!
+    public init()
+    @objc deinit
+  }
+  open class RawCommand {
+    open var command: Swift.String!
+    open var deviceType: CloverGoReaderSDK.DeviceType!
+    public init()
+    @objc deinit
+  }
+  @objc deinit
+}
+open class CardReaderInfo {
+  public init()
+  public init(deviceType: CloverGoReaderSDK.DeviceType, bluetoothId: Swift.String, bluetoothName: Swift.String)
+  open var readerSerialNo: Swift.String? {
+    get
+  }
+  open var batteryPercentage: Swift.Int {
+    get
+  }
+  open var bluetoothId: Swift.String? {
+    get
+  }
+  open var bluetoothName: Swift.String? {
+    get
+  }
+  open var deviceType: CloverGoReaderSDK.DeviceType! {
+    get
+  }
+  open var connected: Swift.Bool {
+    get
+  }
+  open var paired: Swift.Bool {
+    get
+  }
+  open var readerReady: Swift.Bool {
+    get
+  }
+  open var firmwareVersion: Swift.String? {
+    get
+  }
+  @objc deinit
+}
+public struct ErrorEvent {
+  public var errorEventType: CloverGoReaderSDK.ErrorEventType! {
+    get
+  }
+  public var errorEventAction: CloverGoReaderSDK.ErrorEventActionType! {
+    get
+  }
+  public var data: Swift.String! {
+    get
+  }
+}
+public protocol ReaderCallBack : AnyObject {
+  func onConnected(_ readerInfo: CloverGoReaderSDK.CardReaderInfo)
+  func onDisconnected(_ readerInfo: CloverGoReaderSDK.CardReaderInfo)
+  func onProgress(_ readerEvent: CloverGoReaderSDK.ReaderEvent)
+  func onInitializationError(_ errorEvent: CloverGoReaderSDK.ErrorEvent)
+  func onCardReaderDiscovered(_ discoveredReaders: Foundation.NSArray?)
+  func onPlugged()
+}
+public protocol CardReaderTransactionCallBack : AnyObject {
+  func onAidMatch(_ applicationIdentifiers: Foundation.NSArray, needUserInput: Swift.Bool)
+  func onSwipe(_ data: [CloverGoReaderSDK.CardDataParameter : Swift.String])
+  func onDip(_ data: [CloverGoReaderSDK.CardDataParameter : Swift.String])
+  func onTap(_ data: [CloverGoReaderSDK.CardDataParameter : Swift.String])
+  func onEMVComplete(_ data: [CloverGoReaderSDK.CardDataParameter : Swift.String])
+  func onAbort()
+  func onReaderStop()
+  func onProgress(_ cardReaderTransactionEvent: CloverGoReaderSDK.CardReaderTransactionEvent)
+  func onError(_ errorEvent: CloverGoReaderSDK.ErrorEvent)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class BluetoothConfigurationManager : CloverGoReaderSDK.AudioJackConfigurationManager, RUA.RUADeviceSearchListener {
+  override open func loadParamsToReader(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  open func startBluetoothScan()
+  open func stopBluetoothScan()
+  open func connect(_ readerInfo: CloverGoReaderSDK.CardReaderInfo)
+  open func disconnect()
+  open func sendRawCommands(_ commands: Foundation.NSArray)
+  override open func setReaderParams(_ readerCoreData: CloverGoReaderSDK.ReaderCoreData)
+  @objc open func discoveredDevice(_ reader: RUA.RUADevice!)
+  @objc open func discoveryComplete()
+  override open func updateFirmware(firmwareId: Swift.String)
+  override open func updateContactlessAID(offline: Swift.Bool, offlineProperties: [CloverGoReaderSDK.OfflineProperties : Swift.String] = [:], success: @escaping (Swift.Bool) -> Swift.Void)
+  @objc deinit
+}
+public struct ReaderEvent {
+  public var readerEventType: CloverGoReaderSDK.ReaderEventType! {
+    get
+  }
+  public var data: Swift.String! {
+    get
+  }
+}
+extension CloverGoReaderSDK.DeviceType : Swift.Equatable {}
+extension CloverGoReaderSDK.DeviceType : Swift.Hashable {}
+extension CloverGoReaderSDK.DeviceType : Swift.RawRepresentable {}
+extension CloverGoReaderSDK.ReaderEventType : Swift.Equatable {}
+extension CloverGoReaderSDK.ReaderEventType : Swift.Hashable {}
+extension CloverGoReaderSDK.TransactionEventType : Swift.Equatable {}
+extension CloverGoReaderSDK.TransactionEventType : Swift.Hashable {}
+extension CloverGoReaderSDK.ErrorEventType : Swift.Equatable {}
+extension CloverGoReaderSDK.ErrorEventType : Swift.Hashable {}
+extension CloverGoReaderSDK.ErrorEventActionType : Swift.Equatable {}
+extension CloverGoReaderSDK.ErrorEventActionType : Swift.Hashable {}
+extension CloverGoReaderSDK.OfflineProperties : Swift.Equatable {}
+extension CloverGoReaderSDK.OfflineProperties : Swift.Hashable {}
+extension CloverGoReaderSDK.CardDataParameter : Swift.Equatable {}
+extension CloverGoReaderSDK.CardDataParameter : Swift.Hashable {}
+extension CloverGoReaderSDK.CardDataParameter : Swift.RawRepresentable {}
