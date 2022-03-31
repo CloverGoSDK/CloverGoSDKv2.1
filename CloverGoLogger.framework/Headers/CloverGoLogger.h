@@ -2,11 +2,10 @@
 //  CloverGoLogger.h
 //  CloverGoLogger
 //
-//  Created by Veeramani, Rajan (Non-Employee) on 7/3/17.
-//  Copyright © 2017 Veeramani, Rajan (Non-Employee). All rights reserved.
+//  Created by Rajan Veeramani on 3/31/22.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for CloverGoLogger.
 FOUNDATION_EXPORT double CloverGoLoggerVersionNumber;

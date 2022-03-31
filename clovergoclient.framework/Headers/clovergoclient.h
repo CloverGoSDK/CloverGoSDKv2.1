@@ -2,11 +2,10 @@
 //  clovergoclient.h
 //  clovergoclient
 //
-//  Created by Chinya, Arjun (Non-Employee) on 11/1/16.
-//
+//  Created by Rajan Veeramani on 3/31/22.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for clovergoclient.
 FOUNDATION_EXPORT double clovergoclientVersionNumber;

@@ -2,11 +2,10 @@
 //  CloverGoReaderSDK.h
 //  CloverGoReaderSDK
 //
-//  Created by Veeramani, Rajan (Non-Employee) on 2/20/17.
-//  Copyright © 2017 Veeramani, Rajan (Non-Employee). All rights reserved.
+//  Created by Rajan Veeramani on 3/31/22.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for CloverGoReaderSDK.
 FOUNDATION_EXPORT double CloverGoReaderSDKVersionNumber;
