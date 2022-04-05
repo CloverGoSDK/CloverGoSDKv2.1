@@ -18,23 +18,23 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/Project/arm.swiftsourceinfo</key>
 		<data>
-		VsD+lROTcDcPHJgWwrzHomRoZNo=
+		V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<data>
-		3KVmE2M4soOHGuATsxcBfFCCihA=
+		uErm6h/YFduIZpMyzHy0U4Lb3tw=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<data>
-		3KVmE2M4soOHGuATsxcBfFCCihA=
+		uErm6h/YFduIZpMyzHy0U4Lb3tw=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/Project/armv7-apple-ios.swiftsourceinfo</key>
 		<data>
-		VsD+lROTcDcPHJgWwrzHomRoZNo=
+		V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/Project/armv7.swiftsourceinfo</key>
 		<data>
-		VsD+lROTcDcPHJgWwrzHomRoZNo=
+		V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm.swiftdoc</key>
 		<data>
@@ -42,7 +42,7 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm.swiftmodule</key>
 		<data>
-		p20c+/S8v0fHwWp5rp+wW62jWaY=
+		Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm64-apple-ios.swiftdoc</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm64-apple-ios.swiftmodule</key>
 		<data>
-		E9Lh0MGbisahgodj/giQpiqTplE=
+		qlAdXsrEKZcq0/kG1lOIW62uPXg=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm64.swiftdoc</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/arm64.swiftmodule</key>
 		<data>
-		E9Lh0MGbisahgodj/giQpiqTplE=
+		qlAdXsrEKZcq0/kG1lOIW62uPXg=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/armv7-apple-ios.swiftdoc</key>
 		<data>
@@ -66,7 +66,7 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/armv7-apple-ios.swiftmodule</key>
 		<data>
-		p20c+/S8v0fHwWp5rp+wW62jWaY=
+		Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/armv7.swiftdoc</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Modules/clovergoclient.swiftmodule/armv7.swiftmodule</key>
 		<data>
-		p20c+/S8v0fHwWp5rp+wW62jWaY=
+		Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -125,55 +125,55 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			VsD+lROTcDcPHJgWwrzHomRoZNo=
+			V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 			</data>
 			<key>hash2</key>
 			<data>
-			ARILLoFQ0/kyh+M84N/PxqrrlimBFpLBXkyIfPSFjL8=
+			hGiEOsxy0k8Jmm2KZU4kePt3s9MXUZh85ejvz5IghrA=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/Project/arm64-apple-ios.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3KVmE2M4soOHGuATsxcBfFCCihA=
+			uErm6h/YFduIZpMyzHy0U4Lb3tw=
 			</data>
 			<key>hash2</key>
 			<data>
-			AkD5cqxxejLugc3iXIQoVpLaD/rqFkn2q0I4TaD8W48=
+			o7ZmbY66XC09AhdD74Y/G0TpEMol9uZB9AOn3CmBn3I=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/Project/arm64.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3KVmE2M4soOHGuATsxcBfFCCihA=
+			uErm6h/YFduIZpMyzHy0U4Lb3tw=
 			</data>
 			<key>hash2</key>
 			<data>
-			AkD5cqxxejLugc3iXIQoVpLaD/rqFkn2q0I4TaD8W48=
+			o7ZmbY66XC09AhdD74Y/G0TpEMol9uZB9AOn3CmBn3I=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/Project/armv7-apple-ios.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VsD+lROTcDcPHJgWwrzHomRoZNo=
+			V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 			</data>
 			<key>hash2</key>
 			<data>
-			ARILLoFQ0/kyh+M84N/PxqrrlimBFpLBXkyIfPSFjL8=
+			hGiEOsxy0k8Jmm2KZU4kePt3s9MXUZh85ejvz5IghrA=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/Project/armv7.swiftsourceinfo</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			VsD+lROTcDcPHJgWwrzHomRoZNo=
+			V2FHL3vWIqpTS7Sa3f5H7Sfy7C0=
 			</data>
 			<key>hash2</key>
 			<data>
-			ARILLoFQ0/kyh+M84N/PxqrrlimBFpLBXkyIfPSFjL8=
+			hGiEOsxy0k8Jmm2KZU4kePt3s9MXUZh85ejvz5IghrA=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/arm.swiftdoc</key>
@@ -191,11 +191,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			p20c+/S8v0fHwWp5rp+wW62jWaY=
+			Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 			</data>
 			<key>hash2</key>
 			<data>
-			c78JnaUGWCd6A8OQptFX7jNUPzf4XROvhj6MNtkEaW8=
+			T/bImQ7O+5p50+Xoe9ORM53gAuBN1ThwMqzLb32GVQc=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/arm64-apple-ios.swiftdoc</key>
@@ -213,11 +213,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			E9Lh0MGbisahgodj/giQpiqTplE=
+			qlAdXsrEKZcq0/kG1lOIW62uPXg=
 			</data>
 			<key>hash2</key>
 			<data>
-			IXWKNdE25KktwDbK4qrWUGIX9hXHP88jmkscspuLwyE=
+			PHMfkzMk1P8DbT3u+96FLhXoh3Ymc5NYc3Rer3XgT8I=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/arm64.swiftdoc</key>
@@ -235,11 +235,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			E9Lh0MGbisahgodj/giQpiqTplE=
+			qlAdXsrEKZcq0/kG1lOIW62uPXg=
 			</data>
 			<key>hash2</key>
 			<data>
-			IXWKNdE25KktwDbK4qrWUGIX9hXHP88jmkscspuLwyE=
+			PHMfkzMk1P8DbT3u+96FLhXoh3Ymc5NYc3Rer3XgT8I=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/armv7-apple-ios.swiftdoc</key>
@@ -257,11 +257,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			p20c+/S8v0fHwWp5rp+wW62jWaY=
+			Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 			</data>
 			<key>hash2</key>
 			<data>
-			c78JnaUGWCd6A8OQptFX7jNUPzf4XROvhj6MNtkEaW8=
+			T/bImQ7O+5p50+Xoe9ORM53gAuBN1ThwMqzLb32GVQc=
 			</data>
 		</dict>
 		<key>Modules/clovergoclient.swiftmodule/armv7.swiftdoc</key>
@@ -279,11 +279,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			p20c+/S8v0fHwWp5rp+wW62jWaY=
+			Nd+tg7N5RdRU1i+PvX+4GZ5/kBI=
 			</data>
 			<key>hash2</key>
 			<data>
-			c78JnaUGWCd6A8OQptFX7jNUPzf4XROvhj6MNtkEaW8=
+			T/bImQ7O+5p50+Xoe9ORM53gAuBN1ThwMqzLb32GVQc=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
