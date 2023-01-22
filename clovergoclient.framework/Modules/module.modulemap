@@ -6,6 +6,6 @@ framework module clovergoclient {
 }
 
 module clovergoclient.Swift {
-    header "clovergoclient-Swift.h"
-    requires objc
+  header "clovergoclient-Swift.h"
+  requires objc
 }

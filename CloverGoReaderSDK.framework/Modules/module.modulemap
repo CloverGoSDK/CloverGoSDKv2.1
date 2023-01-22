@@ -6,6 +6,6 @@ framework module CloverGoReaderSDK {
 }
 
 module CloverGoReaderSDK.Swift {
-    header "CloverGoReaderSDK-Swift.h"
-    requires objc
+  header "CloverGoReaderSDK-Swift.h"
+  requires objc
 }

@@ -6,6 +6,6 @@ framework module CloverGoLogger {
 }
 
 module CloverGoLogger.Swift {
-    header "CloverGoLogger-Swift.h"
-    requires objc
+  header "CloverGoLogger-Swift.h"
+  requires objc
 }
